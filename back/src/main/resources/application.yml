@@ -28,6 +28,7 @@ spring:
       max-lifetime: 60000
       connection-timeout: 30000
 
+
 server:
   port: 8080
   servlet:
@@ -53,3 +54,10 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
+
+#日志配置
+logging:
+  level:
+    com.xkcoding: debug
+    org.springframework: WARN
+    com.xkcoding.shiny.mapper: debug

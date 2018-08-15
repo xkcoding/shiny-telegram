@@ -2,6 +2,7 @@ package com.xkcoding.shiny;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @modified: yangkai.shen
  */
 @SpringBootApplication
+@MapperScan(basePackages = {"com.xkcoding.shiny.mapper"})
 public class ShinyApplication {
 
 	public static void main(String[] args) {
