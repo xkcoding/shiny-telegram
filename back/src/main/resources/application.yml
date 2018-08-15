@@ -1,7 +1,55 @@
+# 自定义配置
+shiny:
+  # 名称
+  name: ${spring.application.name}
+  # 版本
+  version: 0.0.1
+  # 版权年份
+  copyrightYear: 2018
+  # 作者
+  developer: Yangkai.Shen
+
 spring:
   application:
     name: shiny
+  datasource:
+    url: jdbc:mysql://localhost:3306/shiny?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      connection-test-query: SELECT 1 FROM DUAL
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: ShinyHikariCP
+      max-lifetime: 60000
+      connection-timeout: 30000
+
 server:
   port: 8080
   servlet:
     context-path: /shiny
+  tomcat:
+    uri-encoding: utf-8
+
+# mybatis 配置
+mybatis:
+  type-aliases-package: com.xkcoding.scaffold.model
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 通用 Mapper 配置
+mapper:
+  mappers: tk.mybatis.mapper.common.Mapper
+  notEmpty: true
+
+# PageHelper 配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

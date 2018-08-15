@@ -1,0 +1,16 @@
+${AnsiColor.BRIGHT_GREEN}
+
+ ######     ##     ##    ####    ##    ##    ##    ##
+##    ##    ##     ##     ##     ###   ##     ##  ##
+##          ##     ##     ##     ####  ##      ####
+ ######     #########     ##     ## ## ##       ##
+      ##    ##     ##     ##     ##  ####       ##
+##    ##    ##     ##     ##     ##   ###       ##
+ ######     ##     ##    ####    ##    ##       ##
+
+${AnsiColor.BRIGHT_RED}
+Application 版本: ${shiny.name} - ${shiny.version}
+Application 开发: ${shiny.developer}
+Application 时间: ${shiny.copyrightYear}
+Spring Boot 版本: ${spring-boot.version}
+${AnsiColor.BRIGHT_WHITE}
