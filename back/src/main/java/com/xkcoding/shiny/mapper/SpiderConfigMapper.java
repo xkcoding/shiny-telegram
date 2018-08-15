@@ -2,7 +2,10 @@ package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +22,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface SpiderConfigMapper extends MyMapper<SpiderConfigDO> {
+
+	/**
+	 * 根据采集名称查询采集配置列表
+	 *
+	 * @param text 采集配置名称 / 采集配置备注
+	 * @return 采集配置列表
+	 */
+	List<SpiderConfigDO> selectSpiderConfigByText(@Param("text") String text);
 }
