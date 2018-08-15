@@ -1,7 +1,7 @@
 package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
-import com.xkcoding.shiny.model.SysUser;
+import com.xkcoding.shiny.model.SysUserDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Component;
  * @modified: yangkai.shen
  */
 @Component
-public interface SysUserMapper extends MyMapper<SysUser> {
+public interface SysUserMapper extends MyMapper<SysUserDO> {
 }

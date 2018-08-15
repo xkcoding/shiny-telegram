@@ -1,7 +1,7 @@
 package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
-import com.xkcoding.shiny.model.SysUserRole;
+import com.xkcoding.shiny.model.SysUserRoleDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Component;
  * @modified: yangkai.shen
  */
 @Component
-public interface SysUserRoleMapper extends MyMapper<SysUserRole> {
+public interface SysUserRoleMapper extends MyMapper<SysUserRoleDO> {
 }

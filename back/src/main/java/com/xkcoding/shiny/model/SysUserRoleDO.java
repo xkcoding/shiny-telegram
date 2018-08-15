@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @modified: yangkai.shen
  */
 @Table(name = "sys_user_role")
-public class SysUserRole {
+public class SysUserRoleDO {
 	/**
 	 * 用户ID
 	 */

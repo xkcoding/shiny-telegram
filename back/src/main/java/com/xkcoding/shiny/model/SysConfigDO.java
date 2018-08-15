@@ -1,6 +1,7 @@
 package com.xkcoding.shiny.model;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -19,12 +20,13 @@ import java.util.Date;
  * @modified: yangkai.shen
  */
 @Table(name = "sys_config")
-public class SysConfig {
+public class SysConfigDO {
 	/**
 	 * 参数主键
 	 */
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(generator = "JDBC")
 	private Integer id;
 
 	/**

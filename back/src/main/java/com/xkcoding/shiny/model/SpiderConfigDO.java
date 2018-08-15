@@ -1,55 +1,51 @@
 package com.xkcoding.shiny.model;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * <p>
- * 系统角色
+ * 采集配置
  * </p>
  *
  * @package: com.xkcoding.shiny.model
- * @description： 系统角色
+ * @description： 采集配置
  * @author: yangkai.shen
- * @date: Created in 2018/8/15 下午6:51
+ * @date: Created in 2018/8/15 下午6:50
  * @copyright: Copyright (c) 2018
  * @version: V1.0
  * @modified: yangkai.shen
  */
-@Table(name = "sys_role")
-public class SysRole {
+@Table(name = "spider_config")
+public class SpiderConfigDO {
 	/**
-	 * 角色ID
+	 * 配置主键
 	 */
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(generator = "JDBC")
 	private Integer id;
 
 	/**
-	 * 角色名称
+	 * 采集名称
 	 */
-	@Column(name = "role_name")
-	private String roleName;
+	@Column(name = "spider_name")
+	private String spiderName;
 
 	/**
-	 * 角色权限字符串
+	 * 采集URL
 	 */
-	@Column(name = "role_key")
-	private String roleKey;
+	@Column(name = "spider_url")
+	private String spiderUrl;
 
 	/**
-	 * 显示顺序
+	 * 上次采集时间
 	 */
-	@Column(name = "role_sort")
-	private Integer roleSort;
-
-	/**
-	 * 角色状态（0停用 1正常）
-	 */
-	@Column(name = "status")
-	private Integer status;
+	@Column(name = "last_spider_time")
+	private Date lastSpiderTime;
 
 	/**
 	 * 创建者
@@ -82,93 +78,75 @@ public class SysRole {
 	private String remark;
 
 	/**
-	 * 获取角色ID
+	 * 获取配置主键
 	 *
-	 * @return id - 角色ID
+	 * @return id - 配置主键
 	 */
 	public Integer getId() {
 		return id;
 	}
 
 	/**
-	 * 设置角色ID
+	 * 设置配置主键
 	 *
-	 * @param id 角色ID
+	 * @param id 配置主键
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	/**
-	 * 获取角色名称
+	 * 获取采集名称
 	 *
-	 * @return role_name - 角色名称
+	 * @return spider_name - 采集名称
 	 */
-	public String getRoleName() {
-		return roleName;
+	public String getSpiderName() {
+		return spiderName;
 	}
 
 	/**
-	 * 设置角色名称
+	 * 设置采集名称
 	 *
-	 * @param roleName 角色名称
+	 * @param spiderName 采集名称
 	 */
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setSpiderName(String spiderName) {
+		this.spiderName = spiderName;
 	}
 
 	/**
-	 * 获取角色权限字符串
+	 * 获取采集URL
 	 *
-	 * @return role_key - 角色权限字符串
+	 * @return spider_url - 采集URL
 	 */
-	public String getRoleKey() {
-		return roleKey;
+	public String getSpiderUrl() {
+		return spiderUrl;
 	}
 
 	/**
-	 * 设置角色权限字符串
+	 * 设置采集URL
 	 *
-	 * @param roleKey 角色权限字符串
+	 * @param spiderUrl 采集URL
 	 */
-	public void setRoleKey(String roleKey) {
-		this.roleKey = roleKey;
+	public void setSpiderUrl(String spiderUrl) {
+		this.spiderUrl = spiderUrl;
 	}
 
 	/**
-	 * 获取显示顺序
+	 * 获取上次采集时间
 	 *
-	 * @return role_sort - 显示顺序
+	 * @return last_spider_time - 上次采集时间
 	 */
-	public Integer getRoleSort() {
-		return roleSort;
+	public Date getLastSpiderTime() {
+		return lastSpiderTime;
 	}
 
 	/**
-	 * 设置显示顺序
+	 * 设置上次采集时间
 	 *
-	 * @param roleSort 显示顺序
+	 * @param lastSpiderTime 上次采集时间
 	 */
-	public void setRoleSort(Integer roleSort) {
-		this.roleSort = roleSort;
-	}
-
-	/**
-	 * 获取角色状态（0停用 1正常）
-	 *
-	 * @return status - 角色状态（0停用 1正常）
-	 */
-	public Integer getStatus() {
-		return status;
-	}
-
-	/**
-	 * 设置角色状态（0停用 1正常）
-	 *
-	 * @param status 角色状态（0停用 1正常）
-	 */
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setLastSpiderTime(Date lastSpiderTime) {
+		this.lastSpiderTime = lastSpiderTime;
 	}
 
 	/**

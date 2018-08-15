@@ -1,7 +1,7 @@
 package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
-import com.xkcoding.shiny.model.SpiderConfig;
+import com.xkcoding.shiny.model.SpiderConfigDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Component;
  * @modified: yangkai.shen
  */
 @Component
-public interface SpiderConfigMapper extends MyMapper<SpiderConfig> {
+public interface SpiderConfigMapper extends MyMapper<SpiderConfigDO> {
 }

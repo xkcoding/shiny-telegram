@@ -1,7 +1,7 @@
 package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
-import com.xkcoding.shiny.model.SpiderLog;
+import com.xkcoding.shiny.model.SpiderLogDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Component;
  * @modified: yangkai.shen
  */
 @Component
-public interface SpiderLogMapper extends MyMapper<SpiderLog> {
+public interface SpiderLogMapper extends MyMapper<SpiderLogDO> {
 }
