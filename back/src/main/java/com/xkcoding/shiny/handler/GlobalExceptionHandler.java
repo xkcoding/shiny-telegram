@@ -1,0 +1,38 @@
+package com.xkcoding.shiny.handler;
+
+import com.xkcoding.shiny.common.ApiResponse;
+import com.xkcoding.shiny.common.status.Status;
+import com.xkcoding.shiny.exception.ShinyException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * <p>
+ * 全局异常处理
+ * </p>
+ *
+ * @package: com.xkcoding.shiny.handler
+ * @description： 全局异常处理
+ * @author: yangkai.shen
+ * @date: Created in 2018/8/15 下午8:40
+ * @copyright: Copyright (c) 2018
+ * @version: V1.0
+ * @modified: yangkai.shen
+ */
+@Slf4j
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+	@ExceptionHandler(value = Exception.class)
+	@ResponseBody
+	public ApiResponse handlerException(Exception e) {
+		if (e instanceof ShinyException) {
+			log.error("【全局异常拦截】ShinyException: 状态码 {}, 异常信息 {}", ((ShinyException) e).getCode(), e.getMessage());
+			return new ApiResponse(((ShinyException) e).getCode(), e.getMessage(), ((ShinyException) e).getData());
+		}
+		log.error("【全局异常拦截】: 异常信息 {} ", e.getMessage());
+		return ApiResponse.ofStatus(Status.INTERNAL_SERVER_ERROR);
+	}
+}
