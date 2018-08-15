@@ -1,6 +1,3 @@
-
-CREATE DATABASE `shiny` /*!40100 DEFAULT CHARACTER SET utf8mb4 */
-
 -- ----------------------------
 -- 1、参数配置表
 -- ----------------------------
@@ -113,10 +110,10 @@ CREATE TABLE `spider_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集内容';
 
 -- ----------------------------
--- 6、采集日志记录
+-- 7、采集日志记录
 -- ----------------------------
-drop table if exists `sys_spider_log`;
-CREATE TABLE `sys_spider_log` (
+drop table if exists `spider_log`;
+CREATE TABLE `spider_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `spider_name` varchar(50) DEFAULT '' COMMENT '采集名称',
   `spider_url` varchar(255) DEFAULT '' COMMENT '采集URL',

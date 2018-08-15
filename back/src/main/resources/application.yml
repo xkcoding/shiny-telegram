@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: shiny
+server:
+  port: 8080
+  servlet:
+    context-path: /shiny
