@@ -29,6 +29,8 @@
 		<hutool.version>4.1.7</hutool.version>
 		<guava.version>26.0-jre</guava.version>
 		<modelmapper.version>2.1.0</modelmapper.version>
+		<xsoup.version>0.3.1</xsoup.version>
+		<httpunit.version>1.7</httpunit.version>
 		<lombok.version>1.16.22</lombok.version>
 	</properties>
 
@@ -99,6 +101,26 @@
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>${modelmapper.version}</version>
+		</dependency>
+
+		<!-- XSoup dom 解析 -->
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>xsoup</artifactId>
+			<version>${xsoup.version}</version>
+		</dependency>
+
+		<!-- 模拟浏览器 -->
+		<dependency>
+			<groupId>com.meteware.httpunit</groupId>
+			<artifactId>httpunit</artifactId>
+			<version>1.5.4-atlassian-6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>rhino</groupId>
+			<artifactId>js</artifactId>
+			<version>1.7R2</version>
 		</dependency>
 
 		<!-- lombok 插件 -->
