@@ -3,7 +3,7 @@
 -- ----------------------------
 drop table if exists `sys_config`;
 CREATE TABLE `sys_config` (
-  `id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
   `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
   `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
   `config_value` varchar(100) DEFAULT '' COMMENT '参数键值',
