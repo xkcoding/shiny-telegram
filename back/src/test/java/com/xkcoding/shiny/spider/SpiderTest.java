@@ -54,8 +54,12 @@ public class SpiderTest extends ShinyApplicationTests {
 		Document versionsDocument = Jsoup.parse(versionsHTML);
 		Elements trs = versionsDocument.select("table").select("tbody").select("tr");
 
-		for (int i = 0; i < trs.size(); i++) {
-			Element tr = trs.get(i);
+		getVersionInfo(trs);
+
+	}
+
+	public static void getVersionInfo(Elements trs) {
+		for (Element tr : trs) {
 			Elements tds = tr.select("td");
 
 			String version = tds.get(0).text();
@@ -65,15 +69,14 @@ public class SpiderTest extends ShinyApplicationTests {
 			Element linkElement = tds.get(4);
 			Elements downloadElements = linkElement.select(".btn-download");
 			for (int k = 0; k < downloadElements.size(); k++) {
-				if (StrUtil.containsIgnoreCase(downloadElements.get(k).text(),"城通网盘" )){
+				if (StrUtil.containsIgnoreCase(downloadElements.get(k).text(), "城通网盘")) {
 					log.debug("【城通】{}", downloadElements.get(k).attr("href"));
-				} else if (StrUtil.containsIgnoreCase(downloadElements.get(k).text(),"百度云盘" )){
+				} else if (StrUtil.containsIgnoreCase(downloadElements.get(k).text(), "百度云盘")) {
 					log.debug("【百度】{}", downloadElements.get(k).attr("href"));
 				}
 			}
 			log.info("【版本】{}，【语言】{}，【更新日期】{}，【文件大小】{}，【城通】{}，【百度】{}", version, language, date, size, null, null);
 		}
-
 	}
 
 	@Test
