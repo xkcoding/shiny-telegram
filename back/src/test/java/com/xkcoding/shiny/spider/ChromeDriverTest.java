@@ -11,7 +11,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import us.codecraft.xsoup.Xsoup;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * <p>
@@ -31,11 +36,14 @@ import us.codecraft.xsoup.Xsoup;
 public class ChromeDriverTest extends ShinyApplicationTests {
 
 	@Test
-	public void testThings() {
+	public void testThings() throws InterruptedException {
+		ArrayList<String> list = new ArrayList<>();
 		System.setProperty("webdriver.chrome.driver", "/Users/yangkai.shen/Desktop/chromedriver"); // 此处PATH替换为你的chromedriver所在路径
 		WebDriver driver = new ChromeDriver();
 		// 让浏览器访问 xclient.info
 		driver.get("http://xclient.info/s/things.html?t=" + RandomUtil.simpleUUID());
+		String oriWin = driver.getWindowHandle();
+		list.add(oriWin);
 		// 用下面代码也可以实现
 		//driver.navigate().to("http://www.baidu.com");
 		// 获取 网页的 title
@@ -54,6 +62,17 @@ public class ChromeDriverTest extends ShinyApplicationTests {
 
 		WebElement element = driver.findElement(By.xpath("//*[@id=\"versions\"]/table/tbody/tr[1]/td[5]/a[2]"));
 		element.click();
+		Thread.sleep(1000);
+		Set<String> handles = driver.getWindowHandles();
+		for (String handle : handles) {
+			if (list.indexOf(handle) == -1) {
+				WebDriverWait wait = new WebDriverWait(driver, 3);
+				wait.until(new ExceptWindow(handle));
+				log.info(handle);
+				list.add(handle);
+			}
+		}
+
 		log.debug(driver.getCurrentUrl());
 		Document bdDocument = Jsoup.parse(driver.getPageSource());
 		String bdLink = Xsoup.compile("//*[@id=\"body\"]/div[1]/div[2]/a/@data-link").evaluate(bdDocument).get();
@@ -89,4 +108,18 @@ public class ChromeDriverTest extends ShinyApplicationTests {
 		// 关闭浏览器
 		driver.quit();
 	}
+
+	static class ExceptWindow implements ExpectedCondition<WebDriver> {
+		private String id;
+
+		public ExceptWindow(String id) {
+			this.id = id;
+		}
+
+		@Override
+		public WebDriver apply(WebDriver d) {
+			return d.switchTo().window(id);
+		}
+	}
+
 }
