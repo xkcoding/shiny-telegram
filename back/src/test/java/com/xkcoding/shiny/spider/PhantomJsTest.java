@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * <p>
- * 测试 PhantomJs<br>
+ * 测试 PhantomJs <br>
  * PhantomJs是一个基于webkit内核的无头浏览器，即没有UI界面，即它就是一个浏览器，只是其内的点击、翻页等人为相关操作需要程序设计实现;
  * 因为爬虫如果每次爬取都调用一次谷歌浏览器来实现操作,在性能上会有一定影响,而且连续开启十几个浏览器简直是内存噩梦,
  * 因此选用phantomJs来替换chromeDriver
