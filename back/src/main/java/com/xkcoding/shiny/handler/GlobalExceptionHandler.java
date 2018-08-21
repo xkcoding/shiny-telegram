@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * <p>
@@ -28,7 +29,10 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = Exception.class)
 	@ResponseBody
 	public ApiResponse handlerException(Exception e) {
-		if (e instanceof ShinyException) {
+		if (e instanceof NoHandlerFoundException) {
+			log.error("【全局异常拦截】NoHandlerFoundException: 请求方法 {}, 请求路径 {}", ((NoHandlerFoundException) e).getRequestURL(), ((NoHandlerFoundException) e).getHttpMethod());
+			return ApiResponse.ofStatus(Status.REQUEST_NOT_FOUND);
+		} else if (e instanceof ShinyException) {
 			log.error("【全局异常拦截】ShinyException: 状态码 {}, 异常信息 {}", ((ShinyException) e).getCode(), e.getMessage());
 			return new ApiResponse(((ShinyException) e).getCode(), e.getMessage(), ((ShinyException) e).getData());
 		}

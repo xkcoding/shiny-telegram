@@ -27,7 +27,10 @@ spring:
       pool-name: ShinyHikariCP
       max-lifetime: 60000
       connection-timeout: 30000
-
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: true
 
 server:
   port: 8080
