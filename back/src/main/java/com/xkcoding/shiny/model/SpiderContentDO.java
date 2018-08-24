@@ -1,5 +1,10 @@
 package com.xkcoding.shiny.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +25,10 @@ import java.util.Date;
  * @modified: yangkai.shen
  */
 @Table(name = "spider_content")
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SpiderContentDO {
 	/**
 	 * 内容主键
@@ -57,7 +66,7 @@ public class SpiderContentDO {
 	 * 软件更新时间
 	 */
 	@Column(name = "update_time")
-	private Date updateTime;
+	private String updateTime;
 
 	/**
 	 * 软件大小
@@ -196,7 +205,7 @@ public class SpiderContentDO {
 	 *
 	 * @return update_time - 软件更新时间
 	 */
-	public Date getUpdateTime() {
+	public String getUpdateTime() {
 		return updateTime;
 	}
 
@@ -205,7 +214,7 @@ public class SpiderContentDO {
 	 *
 	 * @param updateTime 软件更新时间
 	 */
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
 
