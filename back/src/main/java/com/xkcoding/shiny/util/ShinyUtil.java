@@ -47,7 +47,7 @@ public class ShinyUtil {
 	 *
 	 * @return <code>true</code> 是 <code>false</code> 否
 	 */
-	private static Boolean isMac() {
+	public static Boolean isMac() {
 		return SystemUtil.getOsInfo().isMac() || SystemUtil.getOsInfo().isMacOsX();
 	}
 
@@ -56,7 +56,7 @@ public class ShinyUtil {
 	 *
 	 * @return <code>true</code> 是 <code>false</code> 否
 	 */
-	private static Boolean isLinux() {
+	public static Boolean isLinux() {
 		return SystemUtil.getOsInfo().isLinux();
 	}
 
@@ -65,7 +65,7 @@ public class ShinyUtil {
 	 *
 	 * @return <code>true</code> 是 <code>false</code> 否
 	 */
-	private static Boolean isWindows() {
+	public static Boolean isWindows() {
 		return SystemUtil.getOsInfo().isWindows();
 	}
 }
