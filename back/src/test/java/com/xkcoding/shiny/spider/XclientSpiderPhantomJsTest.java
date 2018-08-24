@@ -43,8 +43,8 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 		long start = System.currentTimeMillis();
 		List<SpiderContentDO> data = Lists.newArrayList();
 
-		String url = "http://xclient.info/s/things.html";
-		// String url = "http://xclient.info/s/parallels-desktop.html";
+//		String url = "http://xclient.info/s/things.html";
+		 String url = "http://xclient.info/s/parallels-desktop.html";
 		// String url = "http://xclient.info/s/mweb.html";
 		WebDriver driver = PhantomJsTest.getPhantomJSDriver();
 		// 已访问的 TAB 集合，用户存放已经访问过的 TAB
@@ -108,7 +108,7 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 
 	public void processLink(Boolean isBD, List<SpiderContentDO> data, WebDriver driver, Set<String> windowSet, String oldWindow, SpiderContentDO trData, WebElement link) throws InterruptedException {
 		link.click();
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 		// 浏览器所有 TAB
 		Set<String> windowHandles = driver.getWindowHandles();
 		// 切换 TAB，只切换到未访问过的 TAB
@@ -123,7 +123,12 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 		}
 		Document document = Jsoup.parse(driver.getPageSource());
 		if (isBD) {
-			String bdPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
+			// 有些百度链接是弹窗里才会显示所以废弃
+			// String bdPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
+			// 打开弹窗
+			driver.findElement(By.xpath("//a[contains(@class, 'btn_down_link')]")).click();
+			// 获取链接
+			String bdPan = Xsoup.compile("//a[contains(@class, 'go_down_btn')]/@href").evaluate(Jsoup.parse(driver.getPageSource())).get();
 			String bdKey = Xsoup.compile("//a[contains(@class, 'btn_down_link')]//@data-clipboard-text").evaluate(document).get();
 			trData.setBdPanUrl(bdPan);
 			trData.setBdPanCode(bdKey);
@@ -131,7 +136,7 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 			String ctPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@href").evaluate(document).get();
 			trData.setCtPanUrl(ctPan);
 		}
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 		if (windowHandles.size() > 1) {
 			driver.close();
 		}
