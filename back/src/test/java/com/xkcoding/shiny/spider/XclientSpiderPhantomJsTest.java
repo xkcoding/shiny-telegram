@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.spider;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -44,8 +45,8 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 		List<SpiderContentDO> data = Lists.newArrayList();
 
 //		String url = "http://xclient.info/s/things.html";
-		 String url = "http://xclient.info/s/parallels-desktop.html";
-		// String url = "http://xclient.info/s/mweb.html";
+//		 String url = "http://xclient.info/s/parallels-desktop.html";
+		 String url = "http://xclient.info/s/mweb.html";
 		WebDriver driver = PhantomJsTest.getPhantomJSDriver();
 		// 已访问的 TAB 集合，用户存放已经访问过的 TAB
 		Set<String> windowSet = Sets.newHashSet();
@@ -66,30 +67,36 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 		try {
 			Document document = Jsoup.parse(driver.getPageSource());
 			String versionsHTML = Xsoup.compile("//*[@id=\"versions\"]/table").evaluate(document).get();
-			Document versionsDocument = Jsoup.parse(versionsHTML);
-			Elements trElements = versionsDocument.select("table").select("tbody").select("tr");
+			// 存在版本信息
+			if (StrUtil.isNotBlank(versionsHTML)) {
+				Document versionsDocument = Jsoup.parse(versionsHTML);
+				Elements trElements = versionsDocument.select("table").select("tbody").select("tr");
 
-			List<WebElement> trs = driver.findElements(By.cssSelector("#versions > table > tbody > tr"));
-			for (int i = 0; i < trs.size(); i++) {
-				Elements tdElement = trElements.get(i).select("td");
+				List<WebElement> trs = driver.findElements(By.cssSelector("#versions > table > tbody > tr"));
+				for (int i = 0; i < trs.size(); i++) {
+					Elements tdElement = trElements.get(i).select("td");
 
-				String version = tdElement.get(0).text();
-				String language = tdElement.get(1).text();
-				String date = tdElement.get(2).text();
-				String size = tdElement.get(3).text();
-				SpiderContentDO trData = SpiderContentDO.builder().title(title).content(summary).language(language).updateTime(date).size(size).build();
-				List<WebElement> tds = trs.get(i).findElements(By.cssSelector("td"));
-				List<WebElement> linkElement = tds.get(4).findElements(By.cssSelector("a"));
-				for (WebElement link : linkElement) {
-					String linkText = link.getText();
-					if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
-						processLink(false, data, driver, windowSet, oldWindow, trData, link);
-					} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
-						processLink(true, data, driver, windowSet, oldWindow, trData, link);
+					String version = tdElement.get(0).text();
+					String language = tdElement.get(1).text();
+					String date = tdElement.get(2).text();
+					String size = tdElement.get(3).text();
+					SpiderContentDO trData = SpiderContentDO.builder().title(title).content(summary).language(language).updateTime(date).size(size).spiderTime(DateUtil.parseDate(DateUtil.today())).build();
+					List<WebElement> tds = trs.get(i).findElements(By.cssSelector("td"));
+					List<WebElement> linkElement = tds.get(4).findElements(By.cssSelector("a"));
+					for (WebElement link : linkElement) {
+						String linkText = link.getText();
+						if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
+							processLink(false, data, driver, windowSet, oldWindow, trData, link);
+						} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
+							processLink(true, data, driver, windowSet, oldWindow, trData, link);
+						}
 					}
+					data.add(trData);
+					log.info("软件：{} 版本：{} 语言：{} 更新时间：{} 软件大小：{} 城通：{} 百度：{}", title, version, language, date, size, trData.getCtPanUrl(), trData.getBdPanUrl());
 				}
+			} else {
+				SpiderContentDO trData = SpiderContentDO.builder().title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
 				data.add(trData);
-				log.info("软件：{} 版本：{} 语言：{} 更新时间：{} 软件大小：{} 城通：{} 百度：{}", title, version, language, date, size, trData.getCtPanUrl(), trData.getBdPanUrl());
 			}
 		} catch (NoSuchElementException e) {
 			log.error("{}，暂无版本信息", title);
@@ -127,6 +134,7 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 			// String bdPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
 			// 打开弹窗
 			driver.findElement(By.xpath("//a[contains(@class, 'btn_down_link')]")).click();
+//			Thread.sleep(1000);
 			// 获取链接
 			String bdPan = Xsoup.compile("//a[contains(@class, 'go_down_btn')]/@href").evaluate(Jsoup.parse(driver.getPageSource())).get();
 			String bdKey = Xsoup.compile("//a[contains(@class, 'btn_down_link')]//@data-clipboard-text").evaluate(document).get();
