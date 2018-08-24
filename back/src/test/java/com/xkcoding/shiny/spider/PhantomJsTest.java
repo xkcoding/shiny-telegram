@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class PhantomJsTest extends ShinyApplicationTests {
 
-	private PhantomJSDriver getPhantomJSDriver() {
+	public static PhantomJSDriver getPhantomJSDriver() {
 		//设置必要参数
 		DesiredCapabilities dcaps = new DesiredCapabilities();
 		//ssl证书支持
