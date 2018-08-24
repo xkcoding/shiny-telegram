@@ -17,7 +17,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import us.codecraft.xsoup.Xsoup;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 //		String url = "http://xclient.info/s/things.html";
 //		 String url = "http://xclient.info/s/parallels-desktop.html";
 //		 String url = "http://xclient.info/s/mweb.html";
-		 String url = "http://xclient.info/s/navicat-premium.html";
+		String url = "http://xclient.info/s/navicat-premium.html";
 
 		WebDriver driver = PhantomJsTest.getPhantomJSDriver();
 		// 已访问的 TAB 集合，用户存放已经访问过的 TAB
