@@ -9,6 +9,15 @@
 4. 点击列表页可以查看某个软件具体信息，包括软件基本信息，所有版本信息，所有版本更新时间，所有版本下载地址及提取码
 5. 每天9点定时检查所有配置软件，若有最近两天更新的软件，则把最近更新的软件列表统一发邮件通知
 
+## 使用技术
+1. Spring Boot 后台框架
+2. Spring Task 定时任务
+3. Spring Email 邮件通知
+4. Selenium + ChromeDriver/PhantomJs 模拟浏览器行为处理反爬
+5. Jsoup + Xsoup 解析 DOM 节点
+6. Mysql 存储
+7. Vue + iView 前端框架
+
 ## 项目目录
 ```bash
 .
