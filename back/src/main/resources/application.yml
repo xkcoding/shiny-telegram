@@ -8,6 +8,10 @@ shiny:
   copyrightYear: 2018
   # 作者
   developer: Yangkai.Shen
+  # driver 路径
+  driver-path: /Users/yangkai.shen/Documents/code/back-end/shiny-telegram/back/driver
+  # 并发软件采集的数量
+  spider-num: 5
 
 spring:
   application:
