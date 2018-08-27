@@ -41,7 +41,7 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 
 		WebDriver driver = driverUtil.getPhantomJSDriver();
 
-		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(3);
+		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(20);
 
 		List<SpiderContentDO> spiderContentDOList = SpiderTaskFactory.executeSpider(driver, spiderConfigDO);
 

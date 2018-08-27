@@ -59,7 +59,7 @@ public class SpiderTaskFactory {
 			public void run() {
 				log.info("开始采集，当前时间：{}", DateUtil.now());
 				try {
-					TimeUnit.SECONDS.sleep(RandomUtil.randomInt(3, 20));
+					TimeUnit.SECONDS.sleep(RandomUtil.randomInt(3, 10));
 //					WebDriver driver = driverUtil.getPhantomJSDriver();
 					WebDriver driver = driverUtil.getChromeDriver();
 					List<SpiderContentDO> spiderContentDOList = executeSpider(driver, spiderConfigDO);
@@ -111,7 +111,7 @@ public class SpiderTaskFactory {
 	 * @return 爬取的内容
 	 */
 	public static List<SpiderContentDO> executeSpider(WebDriver driver, SpiderConfigDO spiderConfigDO) throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		List<SpiderContentDO> data = Lists.newArrayList();
 
@@ -151,22 +151,14 @@ public class SpiderTaskFactory {
 					List<WebElement> linkElement = tds.get(4).findElements(By.cssSelector("a"));
 					for (WebElement link : linkElement) {
 						String linkText = link.getText();
-						boolean isBd = false;
-						try {
-							if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
+						if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
 
-								processLink(false, driver, windowSet, oldWindow, trData, link);
-							} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
-								isBd = true;
-								processLink(true, driver, windowSet, oldWindow, trData, link);
-							}
-						} catch (NoSuchElementException e) {
-							log.error("{} 版本 {}，获取链接失败", title, version);
-							if (isBd) {
-								trData.setBdPanUrl("暂无版本链接");
-							} else {
-								trData.setCtPanUrl("暂无版本链接");
-							}
+							processLink(false, driver, windowSet, oldWindow, trData, link);
+						} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
+							processLink(true, driver, windowSet, oldWindow, trData, link);
+						} else {
+							trData.setCtPanUrl("其他下载方式");
+							trData.setBdPanUrl("其他下载方式");
 						}
 					}
 					data.add(trData);
@@ -185,7 +177,7 @@ public class SpiderTaskFactory {
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
 			data.add(trData);
 		} finally {
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 			driver.quit();
 		}
 		return data;
@@ -203,7 +195,7 @@ public class SpiderTaskFactory {
 	 */
 	private static void processLink(Boolean isBD, WebDriver driver, Set<String> windowSet, String oldWindow, SpiderContentDO trData, WebElement link) throws InterruptedException {
 		link.click();
-		TimeUnit.SECONDS.sleep(2);
+		TimeUnit.SECONDS.sleep(1);
 		// 浏览器所有 TAB
 		Set<String> windowHandles = driver.getWindowHandles();
 		// 切换 TAB，只切换到未访问过的 TAB
@@ -217,24 +209,36 @@ public class SpiderTaskFactory {
 			}
 		}
 		Document document = Jsoup.parse(driver.getPageSource());
-		if (isBD) {
-			// 有些百度链接是弹窗里才会显示所以废弃
-			// String bdPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
+		try {
+			if (isBD) {
+				// 有些百度链接是弹窗里才会显示所以废弃
+				// String bdPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
 
-			// 打开弹窗
-			driver.findElement(By.xpath("//a[contains(@class, 'btn_down_link')]")).click();
-			TimeUnit.SECONDS.sleep(2);
-			// 获取链接
-			String bdPan = Xsoup.compile("//a[contains(@class, 'go_down_btn')]/@href").evaluate(Jsoup.parse(driver.getPageSource())).get();
-			bdPan = StrUtil.subBefore(bdPan, "#", true);
-			String bdKey = Xsoup.compile("//a[contains(@class, 'btn_down_link')]//@data-clipboard-text").evaluate(document).get();
-			trData.setBdPanUrl(bdPan);
-			trData.setBdPanCode(bdKey);
-		} else {
-			String ctPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@href").evaluate(document).get();
-			trData.setCtPanUrl(ctPan);
+				// 打开弹窗
+				driver.findElement(By.xpath("//a[contains(@class, 'btn_down_link')]")).click();
+				TimeUnit.SECONDS.sleep(1);
+				// 获取链接
+				String bdPan = Xsoup.compile("//a[contains(@class, 'go_down_btn')]/@href").evaluate(Jsoup.parse(driver.getPageSource())).get();
+				bdPan = StrUtil.subBefore(bdPan, "#", true);
+				String bdKey = Xsoup.compile("//a[contains(@class, 'btn_down_link')]//@data-clipboard-text").evaluate(document).get();
+				trData.setBdPanUrl(bdPan);
+				trData.setBdPanCode(bdKey);
+			} else {
+				String ctPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@href").evaluate(document).get();
+				if (StrUtil.equals(ctPan, "javascript:;")) {
+					ctPan = "获取链接失败";
+				}
+				trData.setCtPanUrl(ctPan);
+			}
+		} catch (NoSuchElementException e) {
+			log.error("{} 版本 {}，获取链接失败", trData.getTitle(), trData.getVersion());
+			if (isBD) {
+				trData.setBdPanUrl("暂无版本链接");
+			} else {
+				trData.setCtPanUrl("暂无版本链接");
+			}
 		}
-		TimeUnit.SECONDS.sleep(2);
+		TimeUnit.SECONDS.sleep(1);
 		if (windowHandles.size() > 1) {
 			driver.close();
 		}

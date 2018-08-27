@@ -42,7 +42,7 @@ public class XclientSpiderChromeTest extends ShinyApplicationTests {
 
 		WebDriver driver = driverUtil.getChromeDriver();
 
-		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(2);
+		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(20);
 
 		List<SpiderContentDO> spiderContentDOList = SpiderTaskFactory.executeSpider(driver, spiderConfigDO);
 
