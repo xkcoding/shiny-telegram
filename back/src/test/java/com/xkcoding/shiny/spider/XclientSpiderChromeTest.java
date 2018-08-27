@@ -6,10 +6,10 @@ import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.SpiderContentDO;
 import com.xkcoding.shiny.task.SpiderTaskFactory;
+import com.xkcoding.shiny.util.DriverUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -31,14 +31,16 @@ import java.util.List;
 public class XclientSpiderChromeTest extends ShinyApplicationTests {
 	@Autowired
 	private SpiderConfigMapper spiderConfigMapper;
+	@Autowired
+	private DriverUtil driverUtil;
+
 
 	@Test
 	public void test() throws InterruptedException {
 
 		long start = System.currentTimeMillis();
 
-		System.setProperty("webdriver.chrome.driver", "/Users/yangkai.shen/Desktop/chromedriver"); // 此处PATH替换为你的chromedriver所在路径
-		WebDriver driver = new ChromeDriver();
+		WebDriver driver = driverUtil.getChromeDriver();
 
 		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(2);
 

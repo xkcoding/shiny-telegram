@@ -3,7 +3,7 @@ package com.xkcoding.shiny.spider;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.xkcoding.shiny.ShinyApplicationTests;
-import com.xkcoding.shiny.util.PhantomJsUtil;
+import com.xkcoding.shiny.util.DriverUtil;
 import org.assertj.core.util.Sets;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 import us.codecraft.xsoup.Xsoup;
 
 import java.util.Set;
@@ -33,10 +34,12 @@ import java.util.Set;
  * @modified: yangkai.shen
  */
 public class PhantomJsTest extends ShinyApplicationTests {
+	@Autowired
+	private DriverUtil driverUtil;
 
 	@Test
 	public void test() throws InterruptedException {
-		WebDriver driver = PhantomJsUtil.getPhantomJSDriver();
+		WebDriver driver = driverUtil.getPhantomJSDriver();
 		// 已访问的 TAB 集合，用户存放已经访问过的 TAB
 		Set<String> windowSet = Sets.newHashSet();
 

@@ -6,7 +6,7 @@ import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.SpiderContentDO;
 import com.xkcoding.shiny.task.SpiderTaskFactory;
-import com.xkcoding.shiny.util.PhantomJsUtil;
+import com.xkcoding.shiny.util.DriverUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -32,11 +32,14 @@ public class XclientSpiderPhantomJsTest extends ShinyApplicationTests {
 	@Autowired
 	private SpiderConfigMapper spiderConfigMapper;
 
+	@Autowired
+	private DriverUtil driverUtil;
+
 	@Test
 	public void test() throws InterruptedException {
 		long start = System.currentTimeMillis();
 
-		WebDriver driver = PhantomJsUtil.getPhantomJSDriver();
+		WebDriver driver = driverUtil.getPhantomJSDriver();
 
 		SpiderConfigDO spiderConfigDO = spiderConfigMapper.selectByPrimaryKey(3);
 
