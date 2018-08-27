@@ -7,8 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.xkcoding.shiny.mapper.SpiderContentMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.SpiderContentDO;
-import com.xkcoding.shiny.util.ChromeDriverUtil;
-import com.xkcoding.shiny.util.PhantomJsUtil;
+import com.xkcoding.shiny.util.DriverUtil;
 import com.xkcoding.shiny.util.SpringContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
@@ -45,6 +44,8 @@ import java.util.concurrent.TimeUnit;
 public class SpiderTaskFactory {
 	private static SpiderContentMapper spiderContentMapper = SpringContextHolderUtil.getBean(SpiderContentMapper.class);
 
+	private static DriverUtil driverUtil = SpringContextHolderUtil.getBean(DriverUtil.class);
+
 	/**
 	 * 爬虫采集任务加锁
 	 *
@@ -59,8 +60,8 @@ public class SpiderTaskFactory {
 				log.info("开始采集，当前时间：{}", DateUtil.now());
 				try {
 					TimeUnit.SECONDS.sleep(RandomUtil.randomInt(3, 20));
-//					WebDriver driver = PhantomJsUtil.getPhantomJSDriver();
-					WebDriver driver = ChromeDriverUtil.getChromeDriver();
+//					WebDriver driver = driverUtil.getPhantomJSDriver();
+					WebDriver driver = driverUtil.getChromeDriver();
 					List<SpiderContentDO> spiderContentDOList = executeSpider(driver, spiderConfigDO);
 					if (CollUtil.isNotEmpty(spiderContentDOList)) {
 						spiderContentMapper.insertList(spiderContentDOList);
@@ -88,7 +89,7 @@ public class SpiderTaskFactory {
 			public void run() {
 				log.info("开始采集，当前时间：{}", DateUtil.now());
 				try {
-					WebDriver driver = PhantomJsUtil.getPhantomJSDriver();
+					WebDriver driver = driverUtil.getPhantomJSDriver();
 					List<SpiderContentDO> spiderContentDOList = executeSpider(driver, spiderConfigDO);
 					if (CollUtil.isNotEmpty(spiderContentDOList)) {
 						spiderContentMapper.insertList(spiderContentDOList);
@@ -150,10 +151,22 @@ public class SpiderTaskFactory {
 					List<WebElement> linkElement = tds.get(4).findElements(By.cssSelector("a"));
 					for (WebElement link : linkElement) {
 						String linkText = link.getText();
-						if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
-							processLink(false, driver, windowSet, oldWindow, trData, link);
-						} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
-							processLink(true, driver, windowSet, oldWindow, trData, link);
+						boolean isBd = false;
+						try {
+							if (StrUtil.containsIgnoreCase(linkText, "城通网盘")) {
+
+								processLink(false, driver, windowSet, oldWindow, trData, link);
+							} else if (StrUtil.containsIgnoreCase(linkText, "百度云盘")) {
+								isBd = true;
+								processLink(true, driver, windowSet, oldWindow, trData, link);
+							}
+						} catch (NoSuchElementException e) {
+							log.error("{} 版本 {}，获取链接失败", title, version);
+							if (isBd) {
+								trData.setBdPanUrl("暂无版本链接");
+							} else {
+								trData.setCtPanUrl("暂无版本链接");
+							}
 						}
 					}
 					data.add(trData);
