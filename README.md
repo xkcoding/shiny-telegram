@@ -13,7 +13,7 @@
 1. Spring Boot 后台框架
 2. Spring Task 定时任务
 3. Spring Email 邮件通知
-4. Selenium + ChromeDriver/PhantomJs 模拟浏览器行为处理反爬
+4. Selenium + ChromeDriver( https://sites.google.com/a/chromium.org/chromedriver/downloads )/PhantomJs( http://phantomjs.org/download.html ) 模拟浏览器行为处理反爬
 5. Jsoup + Xsoup 解析 DOM 节点
 6. Mysql 存储
 7. Vue + iView 前端框架
