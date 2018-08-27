@@ -7,7 +7,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="language" jdbcType="VARCHAR" property="language" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="size" jdbcType="VARCHAR" property="size" />
     <result column="ct_pan_url" jdbcType="VARCHAR" property="ctPanUrl" />
     <result column="ct_pan_code" jdbcType="VARCHAR" property="ctPanCode" />

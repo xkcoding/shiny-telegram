@@ -66,7 +66,7 @@ public class SpiderContentDO {
 	 * 软件更新时间
 	 */
 	@Column(name = "update_time")
-	private String updateTime;
+	private Date updateTime;
 
 	/**
 	 * 软件大小
@@ -205,7 +205,7 @@ public class SpiderContentDO {
 	 *
 	 * @return update_time - 软件更新时间
 	 */
-	public String getUpdateTime() {
+	public Date getUpdateTime() {
 		return updateTime;
 	}
 
@@ -214,7 +214,7 @@ public class SpiderContentDO {
 	 *
 	 * @param updateTime 软件更新时间
 	 */
-	public void setUpdateTime(String updateTime) {
+	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
 
