@@ -3,6 +3,7 @@ package com.xkcoding.shiny.spider;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.xkcoding.shiny.ShinyApplicationTests;
+import com.xkcoding.shiny.util.PhantomJsUtil;
 import org.assertj.core.util.Sets;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,9 +11,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import us.codecraft.xsoup.Xsoup;
 
 import java.util.Set;
@@ -36,27 +34,9 @@ import java.util.Set;
  */
 public class PhantomJsTest extends ShinyApplicationTests {
 
-	public static PhantomJSDriver getPhantomJSDriver() {
-		//设置必要参数
-		DesiredCapabilities dcaps = new DesiredCapabilities();
-		//ssl证书支持
-		dcaps.setCapability("acceptSslCerts", true);
-		//截屏支持
-		dcaps.setCapability("takesScreenshot", false);
-		//css搜索支持
-		dcaps.setCapability("cssSelectorsEnabled", true);
-		//js支持
-		dcaps.setJavascriptEnabled(true);
-		//驱动支持
-		dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "/Users/yangkai.shen/Desktop/phantomjs-2.1.1-macosx/bin/phantomjs");
-
-		PhantomJSDriver driver = new PhantomJSDriver(dcaps);
-		return driver;
-	}
-
 	@Test
 	public void test() throws InterruptedException {
-		WebDriver driver = getPhantomJSDriver();
+		WebDriver driver = PhantomJsUtil.getPhantomJSDriver();
 		// 已访问的 TAB 集合，用户存放已经访问过的 TAB
 		Set<String> windowSet = Sets.newHashSet();
 
