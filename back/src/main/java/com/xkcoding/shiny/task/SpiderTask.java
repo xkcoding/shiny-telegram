@@ -35,10 +35,9 @@ public class SpiderTask {
 	private ShinyProperties shinyProperties;
 
 	/**
-	 * 一小时执行一次
-	 * TODO：每天凌晨执行一次
+	 * 每天凌晨2点执行一次
 	 */
-	@Scheduled(fixedRate = 1000 * 60 * 60)
+	@Scheduled(cron = "0 0 2 1/1 1/1 ?")
 	public void spider() throws InterruptedException {
 		log.info("【定时任务】开始采集软件信息......");
 		// 获取所有软件名称-采集页面配置
