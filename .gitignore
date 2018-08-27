@@ -108,3 +108,4 @@ typings/
 
 # Serverless directories
 .serverless
+back/driver/
