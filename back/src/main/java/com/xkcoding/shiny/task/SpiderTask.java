@@ -1,9 +1,13 @@
 package com.xkcoding.shiny.task;
 
+import com.xkcoding.shiny.mapper.SpiderConfigMapper;
+import com.xkcoding.shiny.model.SpiderConfigDO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -22,21 +26,23 @@ import java.util.concurrent.CountDownLatch;
 @Component
 @Slf4j
 public class SpiderTask {
+	@Autowired
+	private SpiderConfigMapper spiderConfigMapper;
 
 	/**
-	 * 一分钟执行一次
+	 * 一小时执行一次
 	 * TODO：每天凌晨执行一次
 	 */
-	@Scheduled(fixedRate = 1000 * 60)
+	@Scheduled(fixedRate = 1000 * 60 * 60)
 	public void spider() throws InterruptedException {
 		log.info("【定时任务】开始采集软件信息......");
 		// 获取所有软件名称-采集页面配置
-		int taskNum = 10;
+		List<SpiderConfigDO> configDOList = spiderConfigMapper.selectAll();
 		// 初始化任务数量
-		CountDownLatch lock = new CountDownLatch(taskNum);
+		CountDownLatch lock = new CountDownLatch(configDOList.size());
 		// 遍历，每个页面调取线程采集
-		for (int i = 0; i < taskNum; i++) {
-			SpiderTaskManager.me().execute(SpiderTaskFactory.spider(lock));
+		for (SpiderConfigDO spiderConfigDO : configDOList) {
+			SpiderTaskManager.me().execute(SpiderTaskFactory.spiderTaskWithLock(spiderConfigDO, lock));
 		}
 
 		// 加锁，等待所有任务完成
