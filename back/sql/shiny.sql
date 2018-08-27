@@ -77,8 +77,8 @@ CREATE TABLE `sys_user_role` (
 drop table if exists `spider_config`;
 CREATE TABLE `spider_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置主键',
-  `spider_name` varchar(50) DEFAULT '' COMMENT '采集名称',
-  `spider_url` varchar(255) DEFAULT '' COMMENT '采集URL',
+  `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
+  `spider_url` varchar(500) DEFAULT '' COMMENT '采集URL',
   `last_spider_time` datetime DEFAULT NULL COMMENT '上次采集时间',
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -95,16 +95,16 @@ drop table if exists `spider_content`;
 CREATE TABLE `spider_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '内容主键',
   `config_id` int(11) NOT NULL COMMENT '采集配置id',
-  `title` varchar(50) DEFAULT '' COMMENT '软件名称',
+  `title` varchar(100) DEFAULT '' COMMENT '软件名称',
   `content` text COMMENT '软件详细信息',
-  `version` varchar(25) DEFAULT '' COMMENT '软件版本',
-  `language` varchar(25) DEFAULT '' COMMENT '软件语言',
+  `version` varchar(100) DEFAULT '' COMMENT '软件版本',
+  `language` varchar(100) DEFAULT '' COMMENT '软件语言',
   `update_time` date DEFAULT NULL COMMENT '软件更新时间',
-  `size` varchar(25) DEFAULT '' COMMENT '软件大小',
-  `ct_pan_url` varchar(255) DEFAULT '' COMMENT '城通网盘链接',
-  `ct_pan_code` varchar(255) DEFAULT '' COMMENT '城通网盘提取码',
-  `bd_pan_url` varchar(255) DEFAULT '' COMMENT '百度网盘链接',
-  `bd_pan_code` varchar(255) DEFAULT '' COMMENT '百度网盘提取码',
+  `size` varchar(100) DEFAULT '' COMMENT '软件大小',
+  `ct_pan_url` varchar(500) DEFAULT '' COMMENT '城通网盘链接',
+  `ct_pan_code` varchar(500) DEFAULT '' COMMENT '城通网盘提取码',
+  `bd_pan_url` varchar(500) DEFAULT '' COMMENT '百度网盘链接',
+  `bd_pan_code` varchar(500) DEFAULT '' COMMENT '百度网盘提取码',
   `spider_time` datetime DEFAULT NULL COMMENT '采集时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集内容';
@@ -115,8 +115,8 @@ CREATE TABLE `spider_content` (
 drop table if exists `spider_log`;
 CREATE TABLE `spider_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-  `spider_name` varchar(50) DEFAULT '' COMMENT '采集名称',
-  `spider_url` varchar(255) DEFAULT '' COMMENT '采集URL',
+  `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
+  `spider_url` varchar(500) DEFAULT '' COMMENT '采集URL',
   `status` int(2) DEFAULT '1' COMMENT '采集状态（0异常 1正常）',
   `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
   `spider_time` datetime DEFAULT NULL COMMENT '采集时间',
