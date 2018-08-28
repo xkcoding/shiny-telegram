@@ -116,6 +116,7 @@ drop table if exists `spider_log`;
 CREATE TABLE `spider_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
+  `version` varchar(100) DEFAULT '' COMMENT '采集版本',
   `spider_url` varchar(500) DEFAULT '' COMMENT '采集URL',
   `status` int(2) DEFAULT '1' COMMENT '采集状态（0异常 1正常）',
   `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',

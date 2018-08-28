@@ -36,6 +36,12 @@ public class SpiderLogDO {
 	private String spiderName;
 
 	/**
+	 * 采集版本
+	 */
+	@Column(name = "version")
+	private String version;
+
+	/**
 	 * 采集URL
 	 */
 	@Column(name = "spider_url")
@@ -93,6 +99,24 @@ public class SpiderLogDO {
 	 */
 	public void setSpiderName(String spiderName) {
 		this.spiderName = spiderName;
+	}
+
+	/**
+	 * 获取采集版本
+	 *
+	 * @return version - 采集版本
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * 设置采集版本
+	 *
+	 * @param version 采集版本
+	 */
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	/**
