@@ -4,10 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xkcoding.shiny.common.status.OperateStatus;
 import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.mapper.SpiderContentMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.SpiderContentDO;
+import com.xkcoding.shiny.model.SpiderLogDO;
+import com.xkcoding.shiny.service.ISpiderLogService;
 import com.xkcoding.shiny.util.DriverUtil;
 import com.xkcoding.shiny.util.SpringContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class SpiderTaskFactory {
 	private static SpiderContentMapper spiderContentMapper = SpringContextHolderUtil.getBean(SpiderContentMapper.class);
+
+	private static ISpiderLogService spiderLogService = SpringContextHolderUtil.getBean(ISpiderLogService.class);
 
 	private static SpiderConfigMapper spiderConfigMapper = SpringContextHolderUtil.getBean(SpiderConfigMapper.class);
 
@@ -118,6 +123,10 @@ public class SpiderTaskFactory {
 	 * @return 爬取的内容
 	 */
 	public static List<SpiderContentDO> executeSpider(WebDriver driver, SpiderConfigDO spiderConfigDO) throws InterruptedException {
+		SpiderLogDO spiderLogDO = new SpiderLogDO();
+		spiderLogDO.setSpiderName(spiderConfigDO.getSpiderName());
+		spiderLogDO.setSpiderUrl(spiderConfigDO.getSpiderUrl());
+
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		List<SpiderContentDO> data = Lists.newArrayList();
@@ -168,20 +177,40 @@ public class SpiderTaskFactory {
 							trData.setBdPanUrl("其他下载方式");
 						}
 					}
-					data.add(trData);
+
+					spiderLogDO.setVersion(version);
+					spiderLogDO.setSpiderTime(new Date());
+					spiderLogDO.setStatus(OperateStatus.SUCCESS.getCode());
+					// 记录日志
+					spiderLogService.saveSpiderLog(spiderLogDO);
 					log.info("软件：{} 版本：{} 语言：{} 更新时间：{} 软件大小：{} 城通：{} 百度：{}", title, version, language, date, size, trData.getCtPanUrl(), trData.getBdPanUrl());
+					data.add(trData);
 				}
 			} else {
 				SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
+				spiderLogDO.setVersion("暂无版本信息");
+				spiderLogDO.setSpiderTime(new Date());
+				spiderLogDO.setStatus(OperateStatus.SUCCESS.getCode());
+				spiderLogService.saveSpiderLog(spiderLogDO);
 				data.add(trData);
 			}
 		} catch (NoSuchElementException e) {
 			log.error("{}，暂无版本信息", title);
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
+			spiderLogDO.setVersion("暂无版本信息");
+			spiderLogDO.setSpiderTime(new Date());
+			spiderLogDO.setStatus(OperateStatus.ERROR.getCode());
+			spiderLogDO.setErrorMsg("版本信息解析失败，无法获取版本信息");
+			spiderLogService.saveSpiderLog(spiderLogDO);
 			data.add(trData);
 		} catch (Exception e) {
 			log.error("采集发生异常，", e);
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
+			spiderLogDO.setVersion("暂无版本信息");
+			spiderLogDO.setSpiderTime(new Date());
+			spiderLogDO.setStatus(OperateStatus.ERROR.getCode());
+			spiderLogDO.setErrorMsg(e.getMessage());
+			spiderLogService.saveSpiderLog(spiderLogDO);
 			data.add(trData);
 		} finally {
 			TimeUnit.SECONDS.sleep(1);
