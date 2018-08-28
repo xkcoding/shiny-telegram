@@ -29,8 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/spider/config")
 @Slf4j
 public class SpiderConfigController {
+	private final ISpiderConfigService spiderConfigService;
+
 	@Autowired
-	private ISpiderConfigService spiderConfigService;
+	public SpiderConfigController(ISpiderConfigService spiderConfigService) {
+		this.spiderConfigService = spiderConfigService;
+	}
 
 	/**
 	 * 返回采集配置列表
