@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.mapper.SpiderContentMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.SpiderContentDO;
@@ -21,6 +22,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import us.codecraft.xsoup.Xsoup;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TimerTask;
@@ -44,6 +46,8 @@ import java.util.concurrent.TimeUnit;
 public class SpiderTaskFactory {
 	private static SpiderContentMapper spiderContentMapper = SpringContextHolderUtil.getBean(SpiderContentMapper.class);
 
+	private static SpiderConfigMapper spiderConfigMapper = SpringContextHolderUtil.getBean(SpiderConfigMapper.class);
+
 	private static DriverUtil driverUtil = SpringContextHolderUtil.getBean(DriverUtil.class);
 
 	/**
@@ -65,6 +69,9 @@ public class SpiderTaskFactory {
 					List<SpiderContentDO> spiderContentDOList = executeSpider(driver, spiderConfigDO);
 					if (CollUtil.isNotEmpty(spiderContentDOList)) {
 						spiderContentMapper.insertList(spiderContentDOList);
+						// 更新配置表对应采集软件的最新采集时间
+						spiderConfigDO.setLastSpiderTime(new Date());
+						spiderConfigMapper.updateByPrimaryKey(spiderConfigDO);
 					}
 				} catch (Exception e) {
 					log.error("【采集】出现异常", e);
@@ -226,7 +233,7 @@ public class SpiderTaskFactory {
 			} else {
 				String ctPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@href").evaluate(document).get();
 				if (StrUtil.equals(ctPan, "javascript:;")) {
-					ctPan = "获取链接失败";
+					ctPan = Xsoup.compile("//a[contains(@class, 'btn_down_link')]/@data-link").evaluate(document).get();
 				}
 				trData.setCtPanUrl(ctPan);
 			}

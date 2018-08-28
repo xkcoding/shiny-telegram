@@ -1,16 +1,14 @@
 package com.xkcoding.shiny.task;
 
-import cn.hutool.core.collection.CollUtil;
-import com.xkcoding.shiny.common.property.ShinyProperties;
 import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
+import com.xkcoding.shiny.service.ISpiderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * <p>
@@ -28,11 +26,15 @@ import java.util.concurrent.CountDownLatch;
 @Component
 @Slf4j
 public class SpiderTask {
-	@Autowired
-	private SpiderConfigMapper spiderConfigMapper;
+	private final SpiderConfigMapper spiderConfigMapper;
+
+	private final ISpiderService spiderService;
 
 	@Autowired
-	private ShinyProperties shinyProperties;
+	public SpiderTask(SpiderConfigMapper spiderConfigMapper, ISpiderService spiderService) {
+		this.spiderConfigMapper = spiderConfigMapper;
+		this.spiderService = spiderService;
+	}
 
 	/**
 	 * 每天凌晨2点执行一次
@@ -42,21 +44,8 @@ public class SpiderTask {
 		log.info("【定时任务】开始采集软件信息......");
 		// 获取所有软件名称-采集页面配置
 		List<SpiderConfigDO> configDOList = spiderConfigMapper.selectAll();
-		// 同时启动浏览器的熟练
-		List<List<SpiderConfigDO>> spiderList = CollUtil.split(configDOList, shinyProperties.getSpiderNum());
-		for (List<SpiderConfigDO> spider : spiderList) {
-			// 初始化任务数量
-			CountDownLatch lock = new CountDownLatch(spider.size());
-			// 遍历，每个页面调取线程采集
-			for (SpiderConfigDO spiderConfigDO : spider) {
-				SpiderTaskManager.me().execute(SpiderTaskFactory.spiderTaskWithLock(spiderConfigDO, lock));
-			}
 
-			// 加锁，等待所有任务完成
-			lock.await();
-
-		}
-
+		spiderService.spider(configDOList);
 		log.info("【定时任务】采集软件信息，全部任务采集完成");
 	}
 
