@@ -36,6 +36,6 @@ public class ScheduleConfig implements SchedulingConfigurer {
 
 	@Bean
 	public Executor taskExecutor() {
-		return new ScheduledThreadPoolExecutor(50, new BasicThreadFactory.Builder().namingPattern("Schedule-Thread-%d").build());
+		return new ScheduledThreadPoolExecutor(100, new BasicThreadFactory.Builder().namingPattern("Schedule-Thread-%d").build());
 	}
 }
