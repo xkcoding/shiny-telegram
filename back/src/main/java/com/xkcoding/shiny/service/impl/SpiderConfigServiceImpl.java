@@ -31,17 +31,21 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SpiderConfigServiceImpl implements ISpiderConfigService {
-	@Autowired
-	private SpiderConfigMapper spiderConfigMapper;
+	private final SpiderConfigMapper spiderConfigMapper;
+
+	private final ModelMapper modelMapper;
 
 	@Autowired
-	private ModelMapper modelMapper;
+	public SpiderConfigServiceImpl(SpiderConfigMapper spiderConfigMapper, ModelMapper modelMapper) {
+		this.spiderConfigMapper = spiderConfigMapper;
+		this.modelMapper = modelMapper;
+	}
 
 	/**
-	 * 分页采集列表
+	 * 分页采集配置列表
 	 *
 	 * @param query 查询条件
-	 * @return 分页采集列表信息
+	 * @return 分页采集配置列表信息
 	 */
 	@Override
 	public PageResult<SpiderConfigVO> listSpiderConfig(SpiderConfigPageQuery query) {
@@ -56,5 +60,26 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 		Long total = ((Page) spiderConfigDOList).getTotal();
 		List<SpiderConfigVO> spiderConfigVOList = spiderConfigDOList.stream().map(spiderConfigDO -> modelMapper.map(spiderConfigDO, SpiderConfigVO.class)).collect(Collectors.toList());
 		return new PageResult<>(total, spiderConfigVOList);
+	}
+
+	/**
+	 * 全部采集配置列表
+	 *
+	 * @return 全部采集配置列表
+	 */
+	@Override
+	public List<SpiderConfigDO> listAllSpiderConfig() {
+		return spiderConfigMapper.selectAll();
+	}
+
+	/**
+	 * 根据配置id获取采集配置
+	 *
+	 * @param id 配置 id
+	 * @return 采集配置 DO
+	 */
+	@Override
+	public SpiderConfigDO selectSpiderConfig(Integer id) {
+		return spiderConfigMapper.selectByPrimaryKey(id);
 	}
 }

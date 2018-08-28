@@ -45,7 +45,12 @@ public enum Status {
 	/**
 	 * 服务器内部错误
 	 */
-	INTERNAL_SERVER_ERROR(500, "服务器内部错误");
+	INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
+
+	/**
+	 * 采集配置不存在
+	 */
+	CONFIG_NOT_EXIST(50001, "采集配置不存在");
 
 	private Integer code;
 	private String msg;

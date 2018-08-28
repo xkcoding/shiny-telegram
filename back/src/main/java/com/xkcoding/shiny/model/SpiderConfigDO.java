@@ -1,5 +1,10 @@
 package com.xkcoding.shiny.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +25,10 @@ import java.util.Date;
  * @modified: yangkai.shen
  */
 @Table(name = "spider_config")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SpiderConfigDO {
 	/**
 	 * 配置主键
