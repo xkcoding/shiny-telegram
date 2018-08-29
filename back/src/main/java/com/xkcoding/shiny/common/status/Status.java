@@ -48,9 +48,19 @@ public enum Status {
 	INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
 
 	/**
+	 * 请求参数错误
+	 */
+	REQUEST_PARAMS_ERROR(50000, "请求参数错误"),
+
+	/**
 	 * 采集配置不存在
 	 */
-	CONFIG_NOT_EXIST(50001, "采集配置不存在");
+	CONFIG_NOT_EXIST(50001, "采集配置不存在"),
+
+	/**
+	 * 日志id列表不能为空
+	 */
+	LOG_LIST_NOT_EMPTY(50002, "日志id列表不能为空");
 
 	private Integer code;
 	private String msg;

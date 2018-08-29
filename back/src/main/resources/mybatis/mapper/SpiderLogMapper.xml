@@ -36,4 +36,12 @@
 		</where>
 		ORDER BY id DESC
 	</select>
+
+	<delete id="deleteBatch">
+		DELETE FROM spider_log WHERE id IN
+		<foreach item="item" index="index" collection="ids"
+		         open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

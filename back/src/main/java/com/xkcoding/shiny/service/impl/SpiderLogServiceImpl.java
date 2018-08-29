@@ -98,4 +98,14 @@ public class SpiderLogServiceImpl implements ISpiderLogService {
 	public void deleteLogById(Integer id) {
 		spiderLogMapper.deleteByPrimaryKey(id);
 	}
+
+	/**
+	 * 批量删除日志
+	 *
+	 * @param ids 日志 id 列表
+	 */
+	@Override
+	public void deleteBatch(List<Integer> ids) {
+		spiderLogMapper.deleteBatch(ids);
+	}
 }

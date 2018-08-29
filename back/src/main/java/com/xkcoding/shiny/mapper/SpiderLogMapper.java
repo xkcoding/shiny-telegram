@@ -34,4 +34,11 @@ public interface SpiderLogMapper extends MyMapper<SpiderLogDO> {
 	 * @return 采集日志列表
 	 */
 	List<SpiderLogDO> selectSpiderLogByParam(@Param("spiderName") String spiderName, @Param("version") String version, @Param("status") Integer status, @Param("errorMsg") String errorMsg, @Param("startTime") String startTime, @Param("endTime") String endTime);
+
+	/**
+	 * 根据 id 列表批量删除日志
+	 *
+	 * @param ids 日志 id 列表
+	 */
+	void deleteBatch(@Param("ids") List<Integer> ids);
 }
