@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -107,5 +108,15 @@ public class SpiderLogServiceImpl implements ISpiderLogService {
 	@Override
 	public void deleteBatch(List<Integer> ids) {
 		spiderLogMapper.deleteBatch(ids);
+	}
+
+	/**
+	 * 删除今天采集的日志
+	 */
+	@Override
+	public void deleteTodayLog() {
+		String today = DateUtil.today();
+		String tomorrow = DateUtil.tomorrow().toDateStr();
+		spiderLogMapper.deleteByDuring(today, tomorrow);
 	}
 }

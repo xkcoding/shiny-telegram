@@ -48,4 +48,9 @@ public interface ISpiderLogService {
 	 * @param ids 日志 id 列表
 	 */
 	void deleteBatch(List<Integer> ids);
+
+	/**
+	 * 删除今天采集的日志
+	 */
+	void deleteTodayLog();
 }

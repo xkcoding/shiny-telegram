@@ -44,4 +44,12 @@
 			#{item}
 		</foreach>
 	</delete>
+
+	<delete id="deleteByDuring">
+		DELETE FROM spider_log
+		WHERE
+		<if test="startTime != null and endTime != null">
+			`spider_time` &gt;= #{startTime} AND `spider_time` &lt;= #{endTime}
+		</if>
+	</delete>
 </mapper>

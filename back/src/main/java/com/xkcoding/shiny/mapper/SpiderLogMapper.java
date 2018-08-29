@@ -41,4 +41,12 @@ public interface SpiderLogMapper extends MyMapper<SpiderLogDO> {
 	 * @param ids 日志 id 列表
 	 */
 	void deleteBatch(@Param("ids") List<Integer> ids);
+
+	/**
+	 * 删除一段时间内的采集的日志
+	 *
+	 * @param startTime 开始日期
+	 * @param endTime   结束日期
+	 */
+	void deleteByDuring(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

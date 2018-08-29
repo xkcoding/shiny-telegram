@@ -77,4 +77,13 @@ public class SpiderLogController {
 		spiderLogService.deleteBatch(ids);
 		return ApiResponse.ofSuccess();
 	}
+
+	/**
+	 * 清空采集日志
+	 */
+	@DeleteMapping(value = "", params = "today")
+	public ApiResponse deleteTodayLog() {
+		spiderLogService.deleteTodayLog();
+		return ApiResponse.ofSuccess();
+	}
 }
