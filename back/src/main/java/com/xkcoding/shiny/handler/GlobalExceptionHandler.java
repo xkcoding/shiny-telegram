@@ -4,6 +4,7 @@ import com.xkcoding.shiny.common.ApiResponse;
 import com.xkcoding.shiny.common.status.Status;
 import com.xkcoding.shiny.exception.ShinyException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,9 @@ public class GlobalExceptionHandler {
 		if (e instanceof NoHandlerFoundException) {
 			log.error("【全局异常拦截】NoHandlerFoundException: 请求方法 {}, 请求路径 {}", ((NoHandlerFoundException) e).getRequestURL(), ((NoHandlerFoundException) e).getHttpMethod());
 			return ApiResponse.ofStatus(Status.REQUEST_NOT_FOUND);
+		} else if (e instanceof HttpMessageNotReadableException) {
+			log.error("【全局异常拦截】HttpMessageNotReadableException: 错误信息 {}", ((HttpMessageNotReadableException) e).getMessage());
+			return ApiResponse.ofStatus(Status.REQUEST_PARAMS_ERROR);
 		} else if (e instanceof ShinyException) {
 			log.error("【全局异常拦截】ShinyException: 状态码 {}, 异常信息 {}", ((ShinyException) e).getCode(), e.getMessage());
 			return new ApiResponse(((ShinyException) e).getCode(), e.getMessage(), ((ShinyException) e).getData());
