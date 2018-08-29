@@ -10,4 +10,30 @@
 		<result column="error_msg" jdbcType="VARCHAR" property="errorMsg"/>
 		<result column="spider_time" jdbcType="TIMESTAMP" property="spiderTime"/>
 	</resultMap>
+
+	<select id="selectSpiderLogByParam" resultType="com.xkcoding.shiny.model.SpiderLogDO">
+		SELECT * FROM
+		spider_log
+		<where>
+			<if test="spiderName != null">
+				`spider_name` LIKE CONCAT("%", #{spiderName}, "%")
+			</if>
+			<if test="version != null">
+				AND `version` LIKE CONCAT("%", #{version}, "%")
+			</if>
+			<if test="status != null">
+				AND `status` = #{status}
+			</if>
+			<if test="errorMsg != null">
+				AND error_msg LIKE CONCAT("%", #{errorMsg}, "%")
+			</if>
+			<if test="startTime != null">
+				AND `spider_time` &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND `spider_time` &lt;= #{endTime}
+			</if>
+		</where>
+		ORDER BY id DESC
+	</select>
 </mapper>
