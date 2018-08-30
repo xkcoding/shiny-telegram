@@ -63,4 +63,11 @@ public interface ISpiderConfigService {
 	 * @throws ShinyException 采集配置不存在
 	 */
 	SpiderConfigDO updateConfig(Integer id, SpiderConfigVO spiderConfigVO) throws ShinyException;
+
+	/**
+	 * 根据配置 id 删除采集配置
+	 *
+	 * @param id 配置 id
+	 */
+	void deleteConfig(Integer id);
 }

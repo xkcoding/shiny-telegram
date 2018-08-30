@@ -67,9 +67,23 @@ public class SpiderConfigController {
 		if (ShinyUtil.isEmpty(spiderConfigVO, SpiderConfigVO.class) || !ObjectUtil.equal(id, spiderConfigVO.getId())) {
 			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
 		}
-
 		SpiderConfigDO spiderConfigDO = spiderConfigService.updateConfig(id, spiderConfigVO);
 		return ApiResponse.ofSuccess(spiderConfigDO);
+	}
+
+	/**
+	 * 根据 id 删除采集配置
+	 *
+	 * @param id 配置 id
+	 * @throws ShinyException 参数异常
+	 */
+	@DeleteMapping("/{id}")
+	public ApiResponse deleteConfig(@PathVariable Integer id) throws ShinyException {
+		if (ObjectUtil.isNull(id)) {
+			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
+		}
+		spiderConfigService.deleteConfig(id);
+		return ApiResponse.ofSuccess();
 	}
 
 	/**

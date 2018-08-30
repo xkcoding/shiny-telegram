@@ -123,4 +123,14 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 
 		return spiderConfigMapper.selectByPrimaryKey(id);
 	}
+
+	/**
+	 * 根据配置 id 删除采集配置
+	 *
+	 * @param id 配置 id
+	 */
+	@Override
+	public void deleteConfig(Integer id) {
+		spiderConfigMapper.deleteByPrimaryKey(id);
+	}
 }
