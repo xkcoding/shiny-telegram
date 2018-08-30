@@ -149,4 +149,14 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 		}
 		return modelMapper.map(exist, SpiderConfigVO.class);
 	}
+
+	/**
+	 * 批量删除采集配置
+	 *
+	 * @param ids 采集 id 列表
+	 */
+	@Override
+	public void deleteBatch(List<Integer> ids) {
+		spiderConfigMapper.deleteBatch(ids);
+	}
 }

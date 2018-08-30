@@ -30,4 +30,11 @@ public interface SpiderConfigMapper extends MyMapper<SpiderConfigDO> {
 	 * @return 采集配置列表
 	 */
 	List<SpiderConfigDO> selectSpiderConfigByText(@Param("text") String text);
+
+	/**
+	 * 批量删除采集配置
+	 *
+	 * @param ids 采集 id 列表
+	 */
+	void deleteBatch(@Param("ids") List<Integer> ids);
 }

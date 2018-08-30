@@ -23,4 +23,12 @@
 			</if>
 		</where>
 	</select>
+
+	<delete id="deleteBatch">
+		DELETE FROM spider_config WHERE id IN
+		<foreach item="item" index="index" collection="ids"
+		         open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

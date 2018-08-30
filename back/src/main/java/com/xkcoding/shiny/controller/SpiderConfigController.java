@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.xkcoding.shiny.common.ApiResponse;
 import com.xkcoding.shiny.common.PageResult;
@@ -13,6 +14,8 @@ import com.xkcoding.shiny.util.ShinyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -83,6 +86,21 @@ public class SpiderConfigController {
 			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
 		}
 		spiderConfigService.deleteConfig(id);
+		return ApiResponse.ofSuccess();
+	}
+
+	/**
+	 * 批量删除采集配置
+	 *
+	 * @param ids 配置 id 列表
+	 * @throws ShinyException 参数不能为空
+	 */
+	@DeleteMapping("")
+	public ApiResponse deleteLogBatch(@RequestBody List<Integer> ids) throws ShinyException {
+		if (CollUtil.isEmpty(ids)) {
+			throw new ShinyException(Status.CONFIG_ID_LIST_NOT_EMPTY);
+		}
+		spiderConfigService.deleteBatch(ids);
 		return ApiResponse.ofSuccess();
 	}
 
