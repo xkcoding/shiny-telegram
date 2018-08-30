@@ -78,7 +78,7 @@ public class ShinyUtil {
 	 *
 	 * @param object 对象
 	 * @param clazz  对象类型
-	 * @return <code>true</code> - 空 / <code>false</code> - 非空
+	 * @return 是否为空，<code>true</code> - 空 / <code>false</code> - 非空
 	 */
 	public static Boolean isEmpty(Object object, Class clazz) {
 		if (ObjectUtil.isNull(object)) {
