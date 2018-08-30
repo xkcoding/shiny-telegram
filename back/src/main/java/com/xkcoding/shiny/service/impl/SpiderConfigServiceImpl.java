@@ -9,6 +9,7 @@ import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.query.SpiderConfigPageQuery;
 import com.xkcoding.shiny.model.vo.SpiderConfigVO;
 import com.xkcoding.shiny.service.ISpiderConfigService;
+import com.xkcoding.shiny.util.ShinyUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,5 +82,20 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 	@Override
 	public SpiderConfigDO selectSpiderConfig(Integer id) {
 		return spiderConfigMapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 保存采集配置
+	 *
+	 * @param spiderConfigVO 采集配置 VO
+	 * @return 采集配置 DO
+	 */
+	@Override
+	public SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO) {
+		// VO -> DO
+		SpiderConfigDO spiderConfigDO = modelMapper.map(spiderConfigVO, SpiderConfigDO.class);
+		ShinyUtil.beforeInsert(spiderConfigDO, SpiderConfigDO.class);
+		spiderConfigMapper.insertUseGeneratedKeys(spiderConfigDO);
+		return spiderConfigDO;
 	}
 }

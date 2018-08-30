@@ -45,4 +45,11 @@ public interface ISpiderConfigService {
 	 */
 	SpiderConfigDO selectSpiderConfig(Integer id);
 
+	/**
+	 * 保存采集配置
+	 *
+	 * @param spiderConfigVO 采集配置 VO
+	 * @return 采集配置 DO
+	 */
+	SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO);
 }
