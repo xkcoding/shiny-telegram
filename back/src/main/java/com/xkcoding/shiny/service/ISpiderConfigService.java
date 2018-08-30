@@ -1,6 +1,7 @@
 package com.xkcoding.shiny.service;
 
 import com.xkcoding.shiny.common.PageResult;
+import com.xkcoding.shiny.exception.ShinyException;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.query.SpiderConfigPageQuery;
 import com.xkcoding.shiny.model.vo.SpiderConfigVO;
@@ -52,4 +53,14 @@ public interface ISpiderConfigService {
 	 * @return 采集配置 DO
 	 */
 	SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO);
+
+	/**
+	 * 更新采集配置
+	 *
+	 * @param id             配置 id
+	 * @param spiderConfigVO 采集配置 VO
+	 * @return 采集配置 DO
+	 * @throws ShinyException 采集配置不存在
+	 */
+	SpiderConfigDO updateConfig(Integer id, SpiderConfigVO spiderConfigVO) throws ShinyException;
 }

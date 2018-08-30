@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.xkcoding.shiny.common.ApiResponse;
 import com.xkcoding.shiny.common.PageResult;
 import com.xkcoding.shiny.common.status.Status;
@@ -50,6 +51,24 @@ public class SpiderConfigController {
 			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
 		}
 		SpiderConfigDO spiderConfigDO = spiderConfigService.saveConfig(spiderConfigVO);
+		return ApiResponse.ofSuccess(spiderConfigDO);
+	}
+
+	/**
+	 * 更新采集配置
+	 *
+	 * @param id             配置 id
+	 * @param spiderConfigVO 采集配置 VO
+	 * @return 采集配置 DO
+	 * @throws ShinyException 参数异常
+	 */
+	@PutMapping("/{id}")
+	public ApiResponse updateConfig(@PathVariable Integer id, @RequestBody SpiderConfigVO spiderConfigVO) throws ShinyException {
+		if (ShinyUtil.isEmpty(spiderConfigVO, SpiderConfigVO.class) || !ObjectUtil.equal(id, spiderConfigVO.getId())) {
+			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
+		}
+
+		SpiderConfigDO spiderConfigDO = spiderConfigService.updateConfig(id, spiderConfigVO);
 		return ApiResponse.ofSuccess(spiderConfigDO);
 	}
 

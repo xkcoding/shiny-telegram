@@ -51,7 +51,7 @@ public class ShinyUtil {
 	 *
 	 * @return <code>true</code> 是 <code>false</code> 否
 	 */
-	public static Boolean isMac() {
+	static Boolean isMac() {
 		return SystemUtil.getOsInfo().isMac() || SystemUtil.getOsInfo().isMacOsX();
 	}
 
@@ -60,7 +60,7 @@ public class ShinyUtil {
 	 *
 	 * @return <code>true</code> 是 <code>false</code> 否
 	 */
-	public static Boolean isLinux() {
+	static Boolean isLinux() {
 		return SystemUtil.getOsInfo().isLinux();
 	}
 
@@ -97,48 +97,50 @@ public class ShinyUtil {
 	/**
 	 * 插入前操作
 	 *
-	 * @param obj   对象
-	 * @param clazz 对象类型
+	 * @param obj      对象
+	 * @param clazz    对象类型
+	 * @param override 是否覆盖属性
 	 */
-	public static void beforeInsert(Object obj, Class clazz) {
+	public static void beforeInsert(Object obj, Class clazz, boolean override) {
 		Method setCreateBy = ReflectUtil.getMethod(clazz, "setCreateBy");
 		Method getCreateBy = ReflectUtil.getMethod(clazz, "getCreateBy");
 		Method setCreateTime = ReflectUtil.getMethod(clazz, "setCreateTime");
 		Method getCreateTime = ReflectUtil.getMethod(clazz, "getCreateTime");
 
 		if (setCreateBy != null) {
-			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateBy))) {
+			if (override || ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateBy))) {
 				ReflectUtil.invoke(obj, setCreateBy, "管理员");
 			}
 		}
 		if (setCreateTime != null) {
-			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateTime))) {
+			if (override || ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateTime))) {
 				ReflectUtil.invoke(obj, setCreateTime, new Date());
 			}
 		}
 
-		beforeUpdate(obj, clazz);
+		beforeUpdate(obj, clazz, override);
 	}
 
 	/**
 	 * 更新前操作
 	 *
-	 * @param obj   对象
-	 * @param clazz 对象类型
+	 * @param obj      对象
+	 * @param clazz    对象类型
+	 * @param override 是否覆盖属性
 	 */
-	public static void beforeUpdate(Object obj, Class clazz) {
+	public static void beforeUpdate(Object obj, Class clazz, boolean override) {
 		Method setUpdateBy = ReflectUtil.getMethod(clazz, "setUpdateBy");
 		Method getUpdateBy = ReflectUtil.getMethod(clazz, "getUpdateBy");
 		Method setUpdateTime = ReflectUtil.getMethod(clazz, "setUpdateTime");
 		Method getUpdateTime = ReflectUtil.getMethod(clazz, "getUpdateTime");
 
 		if (setUpdateBy != null) {
-			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateBy))) {
+			if (override || ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateBy))) {
 				ReflectUtil.invoke(obj, setUpdateBy, "管理员");
 			}
 		}
 		if (setUpdateTime != null) {
-			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateTime))) {
+			if (override || ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateTime))) {
 				ReflectUtil.invoke(obj, setUpdateTime, new Date());
 			}
 		}

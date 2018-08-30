@@ -1,9 +1,12 @@
 package com.xkcoding.shiny.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xkcoding.shiny.common.PageResult;
+import com.xkcoding.shiny.common.status.Status;
+import com.xkcoding.shiny.exception.ShinyException;
 import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.model.SpiderConfigDO;
 import com.xkcoding.shiny.model.query.SpiderConfigPageQuery;
@@ -94,8 +97,30 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 	public SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO) {
 		// VO -> DO
 		SpiderConfigDO spiderConfigDO = modelMapper.map(spiderConfigVO, SpiderConfigDO.class);
-		ShinyUtil.beforeInsert(spiderConfigDO, SpiderConfigDO.class);
+		ShinyUtil.beforeInsert(spiderConfigDO, SpiderConfigDO.class, true);
 		spiderConfigMapper.insertUseGeneratedKeys(spiderConfigDO);
 		return spiderConfigDO;
+	}
+
+	/**
+	 * 更新采集配置
+	 *
+	 * @param id             配置 id
+	 * @param spiderConfigVO 采集配置 VO
+	 * @return 采集配置 DO
+	 * @throws ShinyException 采集配置不存在
+	 */
+	@Override
+	public SpiderConfigDO updateConfig(Integer id, SpiderConfigVO spiderConfigVO) throws ShinyException {
+		SpiderConfigDO exist = spiderConfigMapper.selectByPrimaryKey(id);
+		if (ObjectUtil.isNull(exist)) {
+			throw new ShinyException(Status.CONFIG_NOT_EXIST);
+		}
+
+		SpiderConfigDO spiderConfigDO = modelMapper.map(spiderConfigVO, SpiderConfigDO.class);
+		ShinyUtil.beforeUpdate(spiderConfigDO, SpiderConfigDO.class, true);
+		spiderConfigMapper.updateByPrimaryKeySelective(spiderConfigDO);
+
+		return spiderConfigMapper.selectByPrimaryKey(id);
 	}
 }
