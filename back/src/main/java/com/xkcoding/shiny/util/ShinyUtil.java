@@ -6,6 +6,9 @@ import cn.hutool.system.SystemUtil;
 import com.xkcoding.shiny.common.ShinyConst;
 import com.xkcoding.shiny.model.query.base.PageCondition;
 
+import java.lang.reflect.Method;
+import java.util.Date;
+
 /**
  * <p>
  * Shiny常用工具类
@@ -67,5 +70,55 @@ public class ShinyUtil {
 	 */
 	public static Boolean isWindows() {
 		return SystemUtil.getOsInfo().isWindows();
+	}
+
+	/**
+	 * 插入前操作
+	 *
+	 * @param obj   对象
+	 * @param clazz 对象类型
+	 */
+	public static void beforeInsert(Object obj, Class clazz) {
+		Method setCreateBy = ReflectUtil.getMethod(clazz, "setCreateBy");
+		Method getCreateBy = ReflectUtil.getMethod(clazz, "getCreateBy");
+		Method setCreateTime = ReflectUtil.getMethod(clazz, "setCreateTime");
+		Method getCreateTime = ReflectUtil.getMethod(clazz, "getCreateTime");
+
+		if (setCreateBy != null) {
+			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateBy))) {
+				ReflectUtil.invoke(obj, setCreateBy, "管理员");
+			}
+		}
+		if (setCreateTime != null) {
+			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getCreateTime))) {
+				ReflectUtil.invoke(obj, setCreateTime, new Date());
+			}
+		}
+
+		beforeUpdate(obj, clazz);
+	}
+
+	/**
+	 * 更新前操作
+	 *
+	 * @param obj   对象
+	 * @param clazz 对象类型
+	 */
+	public static void beforeUpdate(Object obj, Class clazz) {
+		Method setUpdateBy = ReflectUtil.getMethod(clazz, "setUpdateBy");
+		Method getUpdateBy = ReflectUtil.getMethod(clazz, "getUpdateBy");
+		Method setUpdateTime = ReflectUtil.getMethod(clazz, "setUpdateTime");
+		Method getUpdateTime = ReflectUtil.getMethod(clazz, "getUpdateTime");
+
+		if (setUpdateBy != null) {
+			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateBy))) {
+				ReflectUtil.invoke(obj, setUpdateBy, "管理员");
+			}
+		}
+		if (setUpdateTime != null) {
+			if (ObjectUtil.isNull(ReflectUtil.invoke(obj, getUpdateTime))) {
+				ReflectUtil.invoke(obj, setUpdateTime, new Date());
+			}
+		}
 	}
 }
