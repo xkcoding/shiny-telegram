@@ -72,7 +72,7 @@ public class SpiderLogController {
 	@DeleteMapping("")
 	public ApiResponse deleteLogBatch(@RequestBody List<Integer> ids) throws ShinyException {
 		if (CollUtil.isEmpty(ids)) {
-			throw new ShinyException(Status.LOG_LIST_NOT_EMPTY);
+			throw new ShinyException(Status.LOG_ID_LIST_NOT_EMPTY);
 		}
 		spiderLogService.deleteBatch(ids);
 		return ApiResponse.ofSuccess();

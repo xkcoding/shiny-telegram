@@ -60,7 +60,12 @@ public enum Status {
 	/**
 	 * 日志id列表不能为空
 	 */
-	LOG_LIST_NOT_EMPTY(50002, "日志id列表不能为空");
+	LOG_ID_LIST_NOT_EMPTY(50002, "日志id列表不能为空"),
+
+	/**
+	 * 采集id列表不能为空
+	 */
+	CONFIG_ID_LIST_NOT_EMPTY(50002, "采集id列表不能为空");
 
 	private Integer code;
 	private String msg;
