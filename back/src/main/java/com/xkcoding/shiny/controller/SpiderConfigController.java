@@ -1,6 +1,5 @@
 package com.xkcoding.shiny.controller;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.xkcoding.shiny.common.ApiResponse;
 import com.xkcoding.shiny.common.PageResult;
 import com.xkcoding.shiny.common.status.Status;
@@ -47,7 +46,7 @@ public class SpiderConfigController {
 	 */
 	@PostMapping("")
 	public ApiResponse addConfig(@RequestBody SpiderConfigVO spiderConfigVO) throws ShinyException {
-		if (ObjectUtil.isNull(spiderConfigVO)) {
+		if (ShinyUtil.isEmpty(spiderConfigVO, SpiderConfigVO.class)) {
 			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
 		}
 		SpiderConfigDO spiderConfigDO = spiderConfigService.saveConfig(spiderConfigVO);

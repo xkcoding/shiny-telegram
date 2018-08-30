@@ -6,6 +6,7 @@ import cn.hutool.system.SystemUtil;
 import com.xkcoding.shiny.common.ShinyConst;
 import com.xkcoding.shiny.model.query.base.PageCondition;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -70,6 +71,27 @@ public class ShinyUtil {
 	 */
 	public static Boolean isWindows() {
 		return SystemUtil.getOsInfo().isWindows();
+	}
+
+	/**
+	 * 判断对象是否为空对象，属性都为<code>null</code>
+	 *
+	 * @param object 对象
+	 * @param clazz  对象类型
+	 * @return <code>true</code> - 空 / <code>false</code> - 非空
+	 */
+	public static Boolean isEmpty(Object object, Class clazz) {
+		if (ObjectUtil.isNull(object)) {
+			return true;
+		}
+		Field[] fields = ReflectUtil.getFields(clazz);
+		for (Field field : fields) {
+			Object fieldValue = ReflectUtil.getFieldValue(object, field);
+			if (ObjectUtil.isNotNull(fieldValue)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
