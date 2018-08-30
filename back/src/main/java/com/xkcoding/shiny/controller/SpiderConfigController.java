@@ -87,6 +87,22 @@ public class SpiderConfigController {
 	}
 
 	/**
+	 * 查看单个采集配置详情
+	 *
+	 * @param id 配置 id
+	 * @return 采集配置 VO
+	 * @throws ShinyException 参数异常 / 采集配置不存在
+	 */
+	@GetMapping("/{id}")
+	public ApiResponse getConfig(@PathVariable Integer id) throws ShinyException {
+		if (ObjectUtil.isNull(id)) {
+			throw new ShinyException(Status.REQUEST_PARAMS_ERROR);
+		}
+		SpiderConfigVO spiderConfigVO = spiderConfigService.getConfig(id);
+		return ApiResponse.ofSuccess(spiderConfigVO);
+	}
+
+	/**
 	 * 返回采集配置列表
 	 *
 	 * @param query 查询条件

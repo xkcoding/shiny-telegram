@@ -70,4 +70,13 @@ public interface ISpiderConfigService {
 	 * @param id 配置 id
 	 */
 	void deleteConfig(Integer id);
+
+	/**
+	 * 获取采集配置详情
+	 *
+	 * @param id 配置 id
+	 * @return 采集配置 VO
+	 * @throws ShinyException 采集配置不存在
+	 */
+	SpiderConfigVO getConfig(Integer id) throws ShinyException;
 }

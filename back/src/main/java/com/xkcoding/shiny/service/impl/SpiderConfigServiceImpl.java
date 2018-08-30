@@ -133,4 +133,20 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 	public void deleteConfig(Integer id) {
 		spiderConfigMapper.deleteByPrimaryKey(id);
 	}
+
+	/**
+	 * 获取采集配置详情
+	 *
+	 * @param id 配置 id
+	 * @return 采集配置 VO
+	 * @throws ShinyException 采集配置不存在
+	 */
+	@Override
+	public SpiderConfigVO getConfig(Integer id) throws ShinyException {
+		SpiderConfigDO exist = spiderConfigMapper.selectByPrimaryKey(id);
+		if (ObjectUtil.isNull(exist)) {
+			throw new ShinyException(Status.CONFIG_NOT_EXIST);
+		}
+		return modelMapper.map(exist, SpiderConfigVO.class);
+	}
 }
