@@ -2,7 +2,11 @@ package com.xkcoding.shiny.mapper;
 
 import com.xkcoding.shiny.common.MyMapper;
 import com.xkcoding.shiny.model.SpiderContentDO;
+import com.xkcoding.shiny.model.query.SpiderContentPageQuery;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +23,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface SpiderContentMapper extends MyMapper<SpiderContentDO> {
+	/**
+	 * 查询单个采集内容
+	 *
+	 * @param configId 采集配置 id
+	 * @param query    查询条件
+	 * @return 单个采集内容列表
+	 */
+	List<SpiderContentDO> selectSingleSpiderContent(@Param("configId") Integer configId, @Param("query") SpiderContentPageQuery query);
 }
