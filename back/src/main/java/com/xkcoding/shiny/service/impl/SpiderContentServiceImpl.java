@@ -101,4 +101,24 @@ public class SpiderContentServiceImpl implements ISpiderContentService {
 		return new PageResult<>(total, spiderContentVOList);
 	}
 
+	/**
+	 * 查询采集信息列表
+	 *
+	 * @param query 查询条件
+	 * @return 采集信息列表
+	 */
+	@Override
+	public PageResult<SpiderContentVO> listSpiderContent(SpiderContentPageQuery query) {
+		// 分页
+		PageHelper.startPage(query.getCurrentPage(), query.getPageSize());
+
+		// 查询采集信息
+		List<SpiderContentDO> spiderContentDOList = spiderContentMapper.selectSpiderContent(query);
+		Long total = ((Page) spiderContentDOList).getTotal();
+
+		// DO -> VO
+		List<SpiderContentVO> spiderContentVOList = spiderContentDOList.stream().map(spiderContentDO -> modelMapper.map(spiderContentDO, SpiderContentVO.class)).collect(Collectors.toList());
+		return new PageResult<>(total, spiderContentVOList);
+	}
+
 }

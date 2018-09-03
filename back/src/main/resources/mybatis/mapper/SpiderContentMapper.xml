@@ -45,4 +45,31 @@
 		</where>
 		ORDER BY update_time DESC
 	</select>
+
+	<select id="selectSpiderContent" resultType="com.xkcoding.shiny.model.SpiderContentDO">
+		SELECT *, MAX(update_time)
+		FROM spider_content
+		<where>
+			<if test="query.title != null and query.title != ''">
+				AND `title` LIKE CONCAT("%", #{query.title}, "%")
+			</if>
+			<if test="query.content != null and query.content != ''">
+				AND `content` LIKE CONCAT("%", #{query.content}, "%")
+			</if>
+			<if test="query.version != null and query.version != ''">
+				AND `version` LIKE CONCAT("%", #{query.version}, "%")
+			</if>
+			<if test="query.language != null and query.language != ''">
+				AND `language` = #{query.language}
+			</if>
+			<if test="query.updateTime != null and query.updateTime != ''">
+				AND `update_time` = #{query.updateTime}
+			</if>
+			<if test="query.spiderTime != null and query.spiderTime != ''">
+				AND `spider_time` = #{query.spiderTime}
+			</if>
+		</where>
+		GROUP BY config_id
+		ORDER BY config_id
+	</select>
 </mapper>

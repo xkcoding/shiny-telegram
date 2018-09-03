@@ -31,4 +31,12 @@ public interface SpiderContentMapper extends MyMapper<SpiderContentDO> {
 	 * @return 单个采集内容列表
 	 */
 	List<SpiderContentDO> selectSingleSpiderContent(@Param("configId") Integer configId, @Param("query") SpiderContentPageQuery query);
+
+	/**
+	 * 查询采集信息列表
+	 *
+	 * @param query 查询条件
+	 * @return 采集信息列表
+	 */
+	List<SpiderContentDO> selectSpiderContent(@Param("query") SpiderContentPageQuery query);
 }

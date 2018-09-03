@@ -56,4 +56,17 @@ public class SpiderContentController {
 		PageResult<SpiderContentVO> pageResult = spiderContentService.getSpiderContent(configId, query);
 		return ApiResponse.ofSuccess(pageResult);
 	}
+
+	/**
+	 * 查询采集信息列表
+	 *
+	 * @param query 查询条件
+	 * @return 采集信息列表
+	 */
+	@GetMapping("")
+	public ApiResponse listSpiderContent(SpiderContentPageQuery query) {
+		query = ShinyUtil.checkPageCondition(query, SpiderContentPageQuery.class);
+		PageResult<SpiderContentVO> pageResult = spiderContentService.listSpiderContent(query);
+		return ApiResponse.ofSuccess(pageResult);
+	}
 }

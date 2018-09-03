@@ -40,4 +40,12 @@ public interface ISpiderContentService {
 	 * @throws ShinyException 采集配置不存在
 	 */
 	PageResult<SpiderContentVO> getSpiderContent(Integer configId, SpiderContentPageQuery query) throws ShinyException;
+
+	/**
+	 * 查询采集信息列表
+	 *
+	 * @param query 查询条件
+	 * @return 采集信息列表
+	 */
+	PageResult<SpiderContentVO> listSpiderContent(SpiderContentPageQuery query);
 }
