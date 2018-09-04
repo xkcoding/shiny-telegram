@@ -68,6 +68,6 @@ pagehelper:
 #日志配置
 logging:
   level:
-    com.xkcoding: debug
-    org.springframework: WARN
+    com.xkcoding: info
+    org.springframework: info
     com.xkcoding.shiny.mapper: debug
