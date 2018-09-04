@@ -51,8 +51,9 @@ public interface ISpiderConfigService {
 	 *
 	 * @param spiderConfigVO 采集配置 VO
 	 * @return 采集配置 DO
+	 * @throws ShinyException 采集配置已存在
 	 */
-	SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO);
+	SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO) throws ShinyException;
 
 	/**
 	 * 更新采集配置

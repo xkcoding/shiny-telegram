@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
@@ -92,9 +93,21 @@ public class SpiderConfigServiceImpl implements ISpiderConfigService {
 	 *
 	 * @param spiderConfigVO 采集配置 VO
 	 * @return 采集配置 DO
+	 * @throws ShinyException 配置已存在
 	 */
 	@Override
-	public SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO) {
+	public SpiderConfigDO saveConfig(SpiderConfigVO spiderConfigVO) throws ShinyException {
+		if (StrUtil.isBlank(spiderConfigVO.getSpiderUrl())) {
+			throw new ShinyException(Status.CONFIG_URL_NOT_BLANK);
+		}
+
+		// 检查采集配置是否存在
+		SpiderConfigDO query = SpiderConfigDO.builder().spiderUrl(spiderConfigVO.getSpiderUrl()).build();
+		List<SpiderConfigDO> exist = spiderConfigMapper.select(query);
+		if (CollUtil.isNotEmpty(exist)) {
+			throw new ShinyException(Status.CONFIG_EXIST);
+		}
+
 		// VO -> DO
 		SpiderConfigDO spiderConfigDO = modelMapper.map(spiderConfigVO, SpiderConfigDO.class);
 		ShinyUtil.beforeInsert(spiderConfigDO, SpiderConfigDO.class, true);

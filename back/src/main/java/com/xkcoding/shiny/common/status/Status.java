@@ -65,7 +65,17 @@ public enum Status {
 	/**
 	 * 采集id列表不能为空
 	 */
-	CONFIG_ID_LIST_NOT_EMPTY(50002, "采集id列表不能为空");
+	CONFIG_ID_LIST_NOT_EMPTY(50003, "采集id列表不能为空"),
+
+	/**
+	 * 采集配置 URL 不能为空
+	 */
+	CONFIG_URL_NOT_BLANK(50004, "采集配置 URL 不能为空"),
+
+	/**
+	 * 采集配置已存在
+	 */
+	CONFIG_EXIST(50005, "采集配置已存在");
 
 	private Integer code;
 	private String msg;
