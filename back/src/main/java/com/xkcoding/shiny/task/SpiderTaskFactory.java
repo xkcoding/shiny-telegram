@@ -197,6 +197,7 @@ public class SpiderTaskFactory {
 				data.add(trData);
 			}
 		} catch (NoSuchElementException e) {
+			// TODO: 触发异步模板邮件
 			log.error("{}，暂无版本信息", title);
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
 			spiderLogDO.setVersion("暂无版本信息");
@@ -206,6 +207,7 @@ public class SpiderTaskFactory {
 			spiderLogService.saveSpiderLog(spiderLogDO);
 			data.add(trData);
 		} catch (Exception e) {
+			// TODO: 触发异步模板邮件
 			log.error("采集发生异常，", e);
 			log.error("【采集异常】当前采集配置信息，{}", JSONUtil.toJsonStr(spiderConfigDO));
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
@@ -216,7 +218,7 @@ public class SpiderTaskFactory {
 			spiderLogService.saveSpiderLog(spiderLogDO);
 			data.add(trData);
 		} finally {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(2);
 			driver.quit();
 		}
 		return data;
@@ -234,7 +236,7 @@ public class SpiderTaskFactory {
 	 */
 	private static void processLink(Boolean isBD, WebDriver driver, Set<String> windowSet, String oldWindow, SpiderContentDO trData, WebElement link) throws InterruptedException {
 		link.click();
-		TimeUnit.SECONDS.sleep(1);
+		TimeUnit.SECONDS.sleep(2);
 		// 浏览器所有 TAB
 		Set<String> windowHandles = driver.getWindowHandles();
 		// 切换 TAB，只切换到未访问过的 TAB
@@ -255,7 +257,7 @@ public class SpiderTaskFactory {
 
 				// 打开弹窗
 				driver.findElement(By.xpath("//a[contains(@class, 'btn_down_link')]")).click();
-				TimeUnit.SECONDS.sleep(1);
+				TimeUnit.SECONDS.sleep(2);
 				// 获取链接
 				String bdPan = Xsoup.compile("//a[contains(@class, 'go_down_btn')]/@href").evaluate(Jsoup.parse(driver.getPageSource())).get();
 				bdPan = StrUtil.subBefore(bdPan, "#", true);
@@ -277,7 +279,7 @@ public class SpiderTaskFactory {
 				trData.setCtPanUrl("暂无版本链接");
 			}
 		}
-		TimeUnit.SECONDS.sleep(1);
+		TimeUnit.SECONDS.sleep(2);
 		if (windowHandles.size() > 1) {
 			driver.close();
 		}
