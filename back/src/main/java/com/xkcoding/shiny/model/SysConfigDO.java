@@ -1,5 +1,7 @@
 package com.xkcoding.shiny.model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import java.util.Date;
  * @modified: yangkai.shen
  */
 @Table(name = "sys_config")
+@Data
 public class SysConfigDO {
 	/**
 	 * 参数主键

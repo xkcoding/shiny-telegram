@@ -1,5 +1,7 @@
 package com.xkcoding.shiny.model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
  * @modified: yangkai.shen
  */
 @Table(name = "sys_user_role")
+@Data
 public class SysUserRoleDO {
 	/**
 	 * 用户ID
