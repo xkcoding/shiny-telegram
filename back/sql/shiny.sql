@@ -114,12 +114,19 @@ CREATE TABLE `spider_content` (
 -- ----------------------------
 drop table if exists `spider_log`;
 CREATE TABLE `spider_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-  `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
-  `version` varchar(100) DEFAULT '' COMMENT '采集版本',
-  `spider_url` varchar(500) DEFAULT '' COMMENT '采集URL',
-  `status` int(2) DEFAULT '1' COMMENT '采集状态（0异常 1正常）',
-  `error_msg` varchar(2000) DEFAULT '' COMMENT '错误消息',
-  `spider_time` datetime DEFAULT NULL COMMENT '采集时间',
+  `id`          int(11) NOT NULL AUTO_INCREMENT
+  COMMENT '日志主键',
+  `config_id`   int(11) NOT NULL
+  COMMENT '采集配置 id',
+  `spider_name` varchar(100)     DEFAULT '' COMMENT '采集名称',
+  `version`     varchar(100)     DEFAULT ''
+  COMMENT '采集版本',
+  `spider_url`  varchar(500)     DEFAULT ''
+  COMMENT '采集URL',
+  `status`      int(2)           DEFAULT '1'
+  COMMENT '采集状态（0异常 1正常）',
+  `error_msg`   varchar(2000)    DEFAULT ''
+  COMMENT '错误消息',
+  `spider_time` datetime         DEFAULT NULL COMMENT '采集时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集日志记录';

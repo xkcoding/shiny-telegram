@@ -1,5 +1,7 @@
 package com.xkcoding.shiny.model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import java.util.Date;
  * @modified: yangkai.shen
  */
 @Table(name = "spider_log")
+@Data
 public class SpiderLogDO {
 	/**
 	 * 日志主键
@@ -28,6 +31,12 @@ public class SpiderLogDO {
 	@Column(name = "id")
 	@GeneratedValue(generator = "JDBC")
 	private Integer id;
+
+	/**
+	 * 采集配置id
+	 */
+	@Column(name = "config_id")
+	private Integer configId;
 
 	/**
 	 * 采集名称

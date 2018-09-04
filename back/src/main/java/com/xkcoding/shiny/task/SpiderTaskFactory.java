@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.xkcoding.shiny.common.status.OperateStatus;
 import com.xkcoding.shiny.mapper.SpiderConfigMapper;
 import com.xkcoding.shiny.mapper.SpiderContentMapper;
@@ -124,6 +125,7 @@ public class SpiderTaskFactory {
 	 */
 	public static List<SpiderContentDO> executeSpider(WebDriver driver, SpiderConfigDO spiderConfigDO) throws InterruptedException {
 		SpiderLogDO spiderLogDO = new SpiderLogDO();
+		spiderLogDO.setConfigId(spiderConfigDO.getId());
 		spiderLogDO.setSpiderName(spiderConfigDO.getSpiderName());
 		spiderLogDO.setSpiderUrl(spiderConfigDO.getSpiderUrl());
 
@@ -205,6 +207,7 @@ public class SpiderTaskFactory {
 			data.add(trData);
 		} catch (Exception e) {
 			log.error("采集发生异常，", e);
+			log.error("【采集异常】当前采集配置信息，{}", JSONUtil.toJsonStr(spiderConfigDO));
 			SpiderContentDO trData = SpiderContentDO.builder().configId(spiderConfigDO.getId()).title(title).content(summary).version("暂无版本信息").spiderTime(DateUtil.parseDate(DateUtil.today())).build();
 			spiderLogDO.setVersion("暂无版本信息");
 			spiderLogDO.setSpiderTime(new Date());
