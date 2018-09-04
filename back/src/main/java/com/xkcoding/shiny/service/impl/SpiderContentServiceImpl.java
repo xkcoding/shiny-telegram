@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.Page;
@@ -119,6 +120,22 @@ public class SpiderContentServiceImpl implements ISpiderContentService {
 		// DO -> VO
 		List<SpiderContentVO> spiderContentVOList = spiderContentDOList.stream().map(spiderContentDO -> modelMapper.map(spiderContentDO, SpiderContentVO.class)).collect(Collectors.toList());
 		return new PageResult<>(total, spiderContentVOList);
+	}
+
+	/**
+	 * 获取今天采集的最近更新时间在2天内的所有软件信息
+	 *
+	 * @return 今天采集的最近更新时间在2天内的所有软件信息
+	 */
+	@Override
+	public List<SpiderContentDO> listLatestSoftware() {
+		DateTime now = DateUtil.date();
+
+		DateTime today = DateUtil.beginOfDay(now);
+		DateTime startTime = DateUtil.offsetDay(today, -2);
+		DateTime endTime = today;
+
+		return spiderContentMapper.selectLatestSpiderContent(today.toString(), startTime.toString(), endTime.toString());
 	}
 
 }

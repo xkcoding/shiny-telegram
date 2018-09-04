@@ -72,4 +72,12 @@
 		GROUP BY config_id
 		ORDER BY config_id
 	</select>
+
+	<select id="selectLatestSpiderContent" resultType="com.xkcoding.shiny.model.SpiderContentDO">
+		SELECT *
+		FROM spider_content
+		WHERE spider_time = #{spiderTime}
+		  AND update_time &gt;= #{updateTimeStart}
+		  AND update_time &lt;= #{updateTimeEnd}
+	</select>
 </mapper>

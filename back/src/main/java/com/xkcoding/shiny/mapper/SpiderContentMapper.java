@@ -39,4 +39,14 @@ public interface SpiderContentMapper extends MyMapper<SpiderContentDO> {
 	 * @return 采集信息列表
 	 */
 	List<SpiderContentDO> selectSpiderContent(@Param("query") SpiderContentPageQuery query);
+
+	/**
+	 * 获取指定采集时间的并且软件更新时间在指定范围内的软件信息
+	 *
+	 * @param spiderTime      采集时间
+	 * @param updateTimeStart 软件更新时间 - 起始范围
+	 * @param updateTimeEnd   软件更新时间 - 结束范围
+	 * @return 指定采集时间的并且软件更新时间在指定范围内的软件信息
+	 */
+	List<SpiderContentDO> selectLatestSpiderContent(@Param("spiderTime") String spiderTime, @Param("updateTimeStart") String updateTimeStart, @Param("updateTimeEnd") String updateTimeEnd);
 }

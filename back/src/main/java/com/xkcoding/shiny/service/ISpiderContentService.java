@@ -2,8 +2,11 @@ package com.xkcoding.shiny.service;
 
 import com.xkcoding.shiny.common.PageResult;
 import com.xkcoding.shiny.exception.ShinyException;
+import com.xkcoding.shiny.model.SpiderContentDO;
 import com.xkcoding.shiny.model.query.SpiderContentPageQuery;
 import com.xkcoding.shiny.model.vo.SpiderContentVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -48,4 +51,11 @@ public interface ISpiderContentService {
 	 * @return 采集信息列表
 	 */
 	PageResult<SpiderContentVO> listSpiderContent(SpiderContentPageQuery query);
+
+	/**
+	 * 获取今天采集的最近更新时间在2天内的所有软件信息
+	 *
+	 * @return 今天采集的最近更新时间在2天内的所有软件信息
+	 */
+	List<SpiderContentDO> listLatestSoftware();
 }
