@@ -12,6 +12,8 @@ shiny:
   driver-path: /Users/yangkai.shen/Documents/code/back-end/shiny-telegram/back/driver
   # 并发软件采集的数量
   spider-num: 5
+  # 邮件发送人
+  mail-from: shiny-telegram<hutool@yeah.net>
 
 spring:
   application:
@@ -38,6 +40,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  mail:
+    host: smtp.yeah.net
+    default-encoding: UTF-8
+    username: hutool@yeah.net
+    password: q1w2e3
 
 server:
   port: 8080

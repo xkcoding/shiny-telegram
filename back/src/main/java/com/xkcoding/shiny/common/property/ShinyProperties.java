@@ -49,4 +49,9 @@ public class ShinyProperties {
 	 */
 	private Integer spiderNum;
 
+	/**
+	 * 邮件发送人
+	 */
+	private String mailFrom;
+
 }

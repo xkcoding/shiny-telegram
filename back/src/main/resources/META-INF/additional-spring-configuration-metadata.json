@@ -30,6 +30,11 @@
 			"type": "java.lang.Integer",
 			"defaultValue": 5,
 			"description": "并发软件采集的数量"
+		},
+		{
+			"name": "shiny.mail-from",
+			"type": "java.lang.String",
+			"description": "邮件发送人"
 		}
 	]
 }
