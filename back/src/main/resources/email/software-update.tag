@@ -128,7 +128,7 @@
 				</td>
 				<td>
 					@if(trData.bdPanUrl!=null){
-					<a target="_blank" href="${trData.bdPanUrl}">城通网盘</a>
+					<a target="_blank" href="${trData.bdPanUrl}">百度网盘</a>
 					@}
 				</td>
 				<td>${trData.bdPanCode}</td>
