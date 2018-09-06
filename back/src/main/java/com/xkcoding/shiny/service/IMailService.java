@@ -1,5 +1,6 @@
 package com.xkcoding.shiny.service;
 
+import javax.mail.MessagingException;
 import java.util.Map;
 
 /**
@@ -42,8 +43,9 @@ public interface IMailService {
 	 * @param subject      邮件主题
 	 * @param params       模板参数
 	 * @param templatePath 模板路径
+	 * @param templateName 模板名称
 	 */
-	void sendHtmlTemplateMail(String to, String subject, Map<String, Object> params, String templatePath);
+	void sendHtmlTemplateMail(String to, String subject, Map<String, Object> params, String templatePath, String templateName) throws MessagingException;
 
 	/**
 	 * 发送附件邮件

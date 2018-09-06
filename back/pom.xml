@@ -29,6 +29,7 @@
 		<commons.lang3.version>3.7</commons.lang3.version>
 		<hutool.version>4.1.10</hutool.version>
 		<guava.version>26.0-jre</guava.version>
+		<beetl.version>2.8.6</beetl.version>
 		<modelmapper.version>2.1.0</modelmapper.version>
 		<xsoup.version>0.3.1</xsoup.version>
 		<httpunit.version>2.29</httpunit.version>
@@ -121,6 +122,15 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+
+		<!-- beetl 模板引擎-->
+		<dependency>
+			<groupId>com.ibeetl</groupId>
+			<artifactId>beetl</artifactId>
+			<version>${beetl.version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- 对象拷贝工具类 -->
