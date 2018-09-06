@@ -1,10 +1,12 @@
 package com.xkcoding.shiny.task;
 
 import cn.hutool.core.collection.CollUtil;
+import com.xkcoding.shiny.common.ShinyConst;
 import com.xkcoding.shiny.model.SpiderContentDO;
 import com.xkcoding.shiny.service.ISpiderContentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -28,9 +30,12 @@ import java.util.List;
 public class NotificationTask {
 	private final ISpiderContentService spiderContentService;
 
+	private final StringRedisTemplate redisTemplate;
+
 	@Autowired
-	public NotificationTask(ISpiderContentService spiderContentService) {
+	public NotificationTask(ISpiderContentService spiderContentService, StringRedisTemplate redisTemplate) {
 		this.spiderContentService = spiderContentService;
+		this.redisTemplate = redisTemplate;
 	}
 
 	/**
@@ -52,6 +57,7 @@ public class NotificationTask {
 		List<SpiderContentDO> spiderContentDOList = spiderContentService.listLatestSoftware();
 		if (CollUtil.isNotEmpty(spiderContentDOList)) {
 			// TODO: 触发异步模板邮件
+			redisTemplate.convertAndSend(ShinyConst.MAIL_CHANNEL, spiderContentDOList);
 			return true;
 		}
 		return false;

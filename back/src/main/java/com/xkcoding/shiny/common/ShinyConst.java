@@ -23,4 +23,9 @@ public interface ShinyConst {
 	 * 默认每页条数
 	 */
 	Integer DEFAULT_PAGE_SIZE = 20;
+
+	/**
+	 * Redis 中监听的邮件通道
+	 */
+	String MAIL_CHANNEL = "channel_mail";
 }

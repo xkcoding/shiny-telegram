@@ -45,6 +45,17 @@ spring:
     default-encoding: UTF-8
     username: hutool@yeah.net
     password: q1w2e3
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+    timeout: 30000ms
 
 server:
   port: 8080
