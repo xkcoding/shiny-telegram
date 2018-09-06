@@ -27,7 +27,7 @@
 		<pagehelper.spring.boot.starter.version>1.2.5</pagehelper.spring.boot.starter.version>
 		<mysql.version>8.0.12</mysql.version>
 		<commons.lang3.version>3.7</commons.lang3.version>
-		<hutool.version>4.1.8</hutool.version>
+		<hutool.version>4.1.10</hutool.version>
 		<guava.version>26.0-jre</guava.version>
 		<modelmapper.version>2.1.0</modelmapper.version>
 		<xsoup.version>0.3.1</xsoup.version>
@@ -47,6 +47,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 		<!-- SpringBoot Actuator -->
