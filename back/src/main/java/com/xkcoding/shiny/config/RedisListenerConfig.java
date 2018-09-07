@@ -73,7 +73,7 @@ public class RedisListenerConfig {
 	 * @return {@link StringRedisTemplate}
 	 */
 	@Bean
-	public StringRedisTemplate template(RedisConnectionFactory connectionFactory) {
+	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
 		return new StringRedisTemplate(connectionFactory);
 	}
 
