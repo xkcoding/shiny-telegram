@@ -37,9 +37,9 @@ public class MailServiceImplTest extends ShinyApplicationTests {
 	public void sendHtmlTemplateMail() throws MessagingException {
 		SpiderContentPageQuery query = new SpiderContentPageQuery();
 		query.setCurrentPage(1);
-		query.setPageSize(10);
+		query.setPageSize(50);
 		PageResult<SpiderContentVO> pageResult = spiderContentService.listSpiderContent(query);
 		List<SpiderContentVO> list = pageResult.getList();
-		mailService.sendHtmlTemplateMail("237497819@qq.com", "软件更新通知", Dict.create().set("trDataList", list), "email", "software-update.tag");
+		mailService.sendHtmlTemplateMail("237497819@qq.com", "软件更新通知", Dict.create().set("trDataList", list), "email", "software-update.html");
 	}
 }
