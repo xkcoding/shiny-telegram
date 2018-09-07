@@ -93,17 +93,19 @@ CREATE TABLE `spider_config` (
 -- ----------------------------
 drop table if exists `spider_content`;
 CREATE TABLE `spider_content` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '内容主键',
-  `config_id` int(11) NOT NULL COMMENT '采集配置id',
-  `title` varchar(100) DEFAULT '' COMMENT '软件名称',
-  `content` text COMMENT '软件详细信息',
-  `version` varchar(100) DEFAULT '' COMMENT '软件版本',
-  `language` varchar(100) DEFAULT '' COMMENT '软件语言',
+  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '内容主键',
+  `config_id`   int(11)      NOT NULL COMMENT '采集配置id',
+  `config_name` varchar(100) NOT NULL
+  COMMENT '采集配置名称',
+  `title`       varchar(100) DEFAULT '' COMMENT '软件名称',
+  `content`     text COMMENT '软件详细信息',
+  `version`     varchar(100) DEFAULT '' COMMENT '软件版本',
+  `language`    varchar(100) DEFAULT '' COMMENT '软件语言',
   `update_time` date DEFAULT NULL COMMENT '软件更新时间',
-  `size` varchar(100) DEFAULT '' COMMENT '软件大小',
-  `ct_pan_url` varchar(500) DEFAULT '' COMMENT '城通网盘链接',
+  `size`        varchar(100) DEFAULT '' COMMENT '软件大小',
+  `ct_pan_url`  varchar(500) DEFAULT '' COMMENT '城通网盘链接',
   `ct_pan_code` varchar(500) DEFAULT '' COMMENT '城通网盘提取码',
-  `bd_pan_url` varchar(500) DEFAULT '' COMMENT '百度网盘链接',
+  `bd_pan_url`  varchar(500) DEFAULT '' COMMENT '百度网盘链接',
   `bd_pan_code` varchar(500) DEFAULT '' COMMENT '百度网盘提取码',
   `spider_time` datetime DEFAULT NULL COMMENT '采集时间',
   PRIMARY KEY (`id`)

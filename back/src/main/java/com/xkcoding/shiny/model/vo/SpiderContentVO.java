@@ -39,6 +39,11 @@ public class SpiderContentVO implements Serializable {
 	private Integer configId;
 
 	/**
+	 * 采集配置名称
+	 */
+	private String configName;
+
+	/**
 	 * 软件名称
 	 */
 	private String title;

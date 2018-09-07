@@ -45,6 +45,12 @@ public class SpiderContentDO {
 	private Integer configId;
 
 	/**
+	 * 采集配置名称
+	 */
+	@Column(name = "config_name")
+	private String configName;
+
+	/**
 	 * 软件名称
 	 */
 	@Column(name = "title")
@@ -144,6 +150,24 @@ public class SpiderContentDO {
 	 */
 	public void setConfigId(Integer configId) {
 		this.configId = configId;
+	}
+
+	/**
+	 * 获取采集配置名称
+	 *
+	 * @return config_name - 采集配置名称
+	 */
+	public String getConfigName() {
+		return configName;
+	}
+
+	/**
+	 * 设置采集配置名称
+	 *
+	 * @param configName 采集配置名称
+	 */
+	public void setConfigName(String configName) {
+		this.configName = configName;
 	}
 
 	/**

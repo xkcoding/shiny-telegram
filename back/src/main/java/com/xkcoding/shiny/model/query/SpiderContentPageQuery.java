@@ -21,6 +21,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class SpiderContentPageQuery extends PageCondition {
 	/**
+	 * 采集配置名称
+	 */
+	private String configName;
+	
+	/**
 	 * 软件名称
 	 */
 	private String title;

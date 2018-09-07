@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.xkcoding.shiny.model.SpiderContentDO">
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="config_id" jdbcType="INTEGER" property="configId"/>
+		<result column="config_name" jdbcType="VARCHAR" property="configName"/>
 		<result column="title" jdbcType="VARCHAR" property="title"/>
 		<result column="version" jdbcType="VARCHAR" property="version"/>
 		<result column="language" jdbcType="VARCHAR" property="language"/>
@@ -23,6 +24,9 @@
 		<where>
 			<if test="configId != null">
 				`config_id` = #{configId}
+			</if>
+			<if test="query.configName != null and query.configName != ''">
+				AND `config_name` LIKE CONCAT("%", #{query.configName}, "%")
 			</if>
 			<if test="query.title != null and query.title != ''">
 				AND `title` LIKE CONCAT("%", #{query.title}, "%")
@@ -47,9 +51,14 @@
 	</select>
 
 	<select id="selectSpiderContent" resultType="com.xkcoding.shiny.model.SpiderContentDO">
-		SELECT *, MAX(update_time)
-		FROM spider_content
+		SELECT
+		*
+		FROM
+		spider_content t
 		<where>
+			<if test="query.configName != null and query.configName != ''">
+				AND `config_name` LIKE CONCAT("%", #{query.configName}, "%")
+			</if>
 			<if test="query.title != null and query.title != ''">
 				AND `title` LIKE CONCAT("%", #{query.title}, "%")
 			</if>
@@ -65,12 +74,33 @@
 			<if test="query.updateTime != null and query.updateTime != ''">
 				AND `update_time` = #{query.updateTime}
 			</if>
+			<if test="query.updateTime == null or query.updateTime == ''">
+				AND `update_time` = (
+				SELECT
+				MAX( `update_time` )
+				FROM
+				`spider_content`
+				WHERE
+				`config_id` = t.`config_id`
+				)
+			</if>
 			<if test="query.spiderTime != null and query.spiderTime != ''">
 				AND `spider_time` = #{query.spiderTime}
 			</if>
+			<if test="query.spiderTime == null or query.spiderTime == ''">
+				AND
+				`spider_time` = (
+				SELECT
+				MAX( `spider_time`)
+				FROM
+				`spider_content`
+				WHERE
+				`config_id` = t.`config_id`
+				)
+			</if>
 		</where>
-		GROUP BY config_id
-		ORDER BY config_id
+		ORDER BY
+		config_id
 	</select>
 
 	<select id="selectLatestSpiderContent" resultType="com.xkcoding.shiny.model.SpiderContentDO">
