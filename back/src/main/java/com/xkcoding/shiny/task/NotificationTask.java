@@ -42,8 +42,7 @@ public class NotificationTask {
 	/**
 	 * 每天早晨9点执行一次
 	 */
-	@Scheduled(fixedDelay = 60 * 1000)
-//	@Scheduled(cron = "0 0 9 1/1 1/1 ?")
+	@Scheduled(cron = "0 0 9 1/1 1/1 ?")
 	public void notification() {
 		log.info("【定时任务】检查今天采集的软件版本更新情况......");
 		boolean hasUpdate = checkContent();
