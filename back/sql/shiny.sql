@@ -144,7 +144,7 @@ CREATE TABLE `spider_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集日志记录';
 
 -- ----------------------------
--- 8、邮件日志记录
+-- 8、邮件记录
 -- ----------------------------
 drop table if exists `email_log`;
 CREATE TABLE `email_log` (
@@ -168,4 +168,4 @@ CREATE TABLE `email_log` (
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
-  COMMENT = '邮件日志记录';
+  COMMENT = '邮件记录';

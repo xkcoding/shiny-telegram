@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 邮件日志记录 Mapper
+ * 邮件记录 Mapper
  * </p>
  *
  * @package: com.xkcoding.shiny.mapper
- * @description: 邮件日志记录 Mapper
+ * @description: 邮件记录 Mapper
  * @author: yangkai.shen
  * @date: Created in 2018/9/9 下午2:57
  * @copyright: Copyright (c) 2018

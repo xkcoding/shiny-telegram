@@ -10,11 +10,11 @@ import java.util.Date;
 
 /**
  * <p>
- * 邮件日志记录 DO
+ * 邮件记录 DO
  * </p>
  *
  * @package: com.xkcoding.shiny.model
- * @description: 邮件日志记录 DO
+ * @description: 邮件记录 DO
  * @author: yangkai.shen
  * @date: Created in 2018/9/9 下午2:56
  * @copyright: Copyright (c) 2018
