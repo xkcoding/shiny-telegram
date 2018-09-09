@@ -93,21 +93,29 @@ CREATE TABLE `spider_config` (
 -- ----------------------------
 drop table if exists `spider_content`;
 CREATE TABLE `spider_content` (
-  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '内容主键',
-  `config_id`   int(11)      NOT NULL COMMENT '采集配置id',
+  `id`          int(11)      NOT NULL AUTO_INCREMENT
+  COMMENT '内容主键',
+  `config_id`   int(11)      NOT NULL
+  COMMENT '采集配置id',
   `config_name` varchar(100) NOT NULL
   COMMENT '采集配置名称',
-  `title`       varchar(100) DEFAULT '' COMMENT '软件名称',
+  `title`       varchar(100)          DEFAULT ''
+  COMMENT '软件名称',
   `content`     text COMMENT '软件详细信息',
-  `version`     varchar(100) DEFAULT '' COMMENT '软件版本',
-  `language`    varchar(100) DEFAULT '' COMMENT '软件语言',
-  `update_time` date DEFAULT NULL COMMENT '软件更新时间',
-  `size`        varchar(100) DEFAULT '' COMMENT '软件大小',
-  `ct_pan_url`  varchar(500) DEFAULT '' COMMENT '城通网盘链接',
-  `ct_pan_code` varchar(500) DEFAULT '' COMMENT '城通网盘提取码',
-  `bd_pan_url`  varchar(500) DEFAULT '' COMMENT '百度网盘链接',
-  `bd_pan_code` varchar(500) DEFAULT '' COMMENT '百度网盘提取码',
-  `spider_time` datetime DEFAULT NULL COMMENT '采集时间',
+  `version`     varchar(100)          DEFAULT ''
+  COMMENT '软件版本',
+  `language`    varchar(100)          DEFAULT ''
+  COMMENT '软件语言',
+  `update_time` date                  DEFAULT NULL COMMENT '软件更新时间',
+  `size`        varchar(100)          DEFAULT ''
+  COMMENT '软件大小',
+  `ct_pan_url`  varchar(500)          DEFAULT ''
+  COMMENT '城通网盘链接',
+  `ct_pan_code` varchar(500)          DEFAULT '' COMMENT '城通网盘提取码',
+  `bd_pan_url`  varchar(500)          DEFAULT ''
+  COMMENT '百度网盘链接',
+  `bd_pan_code` varchar(500)          DEFAULT '' COMMENT '百度网盘提取码',
+  `spider_time` datetime              DEFAULT NULL COMMENT '采集时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集内容';
 
@@ -120,7 +128,8 @@ CREATE TABLE `spider_log` (
   COMMENT '日志主键',
   `config_id`   int(11) NOT NULL
   COMMENT '采集配置 id',
-  `spider_name` varchar(100)     DEFAULT '' COMMENT '采集名称',
+  `spider_name` varchar(100)     DEFAULT ''
+  COMMENT '采集名称',
   `version`     varchar(100)     DEFAULT ''
   COMMENT '采集版本',
   `spider_url`  varchar(500)     DEFAULT ''
@@ -129,6 +138,34 @@ CREATE TABLE `spider_log` (
   COMMENT '采集状态（0异常 1正常）',
   `error_msg`   varchar(2000)    DEFAULT ''
   COMMENT '错误消息',
-  `spider_time` datetime         DEFAULT NULL COMMENT '采集时间',
+  `spider_time` datetime         DEFAULT NULL
+  COMMENT '采集时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采集日志记录';
+
+-- ----------------------------
+-- 8、邮件日志记录
+-- ----------------------------
+drop table if exists `email_log`;
+CREATE TABLE `email_log` (
+  `id`            int(11) NOT NULL AUTO_INCREMENT
+  COMMENT '邮件主键',
+  `to`            text    NOT NULL
+  COMMENT '收件人邮箱地址（多个逗号分隔）',
+  `subject`       varchar(100)     DEFAULT ''
+  COMMENT '邮件主题',
+  `content`       text    NOT NULL
+  COMMENT '邮件内容',
+  `is_template`   int(2)           DEFAULT '1'
+  COMMENT '是否是模板邮件（0否 1是）',
+  `template_path` varchar(100)     DEFAULT NULL
+  COMMENT '模板路径',
+  `template_name` varchar(100)     DEFAULT NULL
+  COMMENT '模板名称',
+  `send_time`     datetime         DEFAULT NULL
+  COMMENT '邮件发送时间',
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COMMENT = '邮件日志记录';

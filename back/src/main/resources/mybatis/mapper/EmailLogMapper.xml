@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xkcoding.shiny.mapper.EmailLogMapper">
+	<resultMap id="BaseResultMap" type="com.xkcoding.shiny.model.EmailLogDO">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="subject" jdbcType="VARCHAR" property="subject"/>
+		<result column="is_template" jdbcType="INTEGER" property="isTemplate"/>
+		<result column="template_path" jdbcType="VARCHAR" property="templatePath"/>
+		<result column="template_name" jdbcType="VARCHAR" property="templateName"/>
+		<result column="send_time" jdbcType="TIMESTAMP" property="sendTime"/>
+		<result column="to" jdbcType="LONGVARCHAR" property="to"/>
+		<result column="content" jdbcType="LONGVARCHAR" property="content"/>
+	</resultMap>
+</mapper>
