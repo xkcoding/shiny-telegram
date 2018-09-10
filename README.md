@@ -94,7 +94,12 @@ MySQL Community Server 5.7.22 is running.
 ```
 
 ### 项目运行
+#### 源码运行
 
+#### 镜像运行
+1. `mysql` 镜像
+    - 使用上面自己构建的镜像
+    - 拉取远端镜像，`docker pull registry.cn-hangzhou.aliyuncs.com/xkcoding/shiny-telegram-mysql:latest`
 
 ## 项目截图
 
