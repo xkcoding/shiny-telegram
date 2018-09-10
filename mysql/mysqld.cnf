@@ -1,0 +1,16 @@
+ # set client default character
+ [mysql]
+ default-character-set=utf8
+ [mysqld]
+ pid-file = /var/run/mysqld/mysqld.pid
+ socket = /var/run/mysqld/mysqld.sock
+ datadir = /var/lib/mysql
+ log-error = /var/log/mysql/error.log
+ # By default we only accept connections from localhost
+ bind-address = 0.0.0.0
+ # Disabling symbolic-links is recommended to prevent assorted security risks
+ symbolic-links=0
+ # set 1 means Ignore capital letters and lowercase letters
+ lower_case_table_names=1
+ # set client default character
+ character-set-server = utf8
