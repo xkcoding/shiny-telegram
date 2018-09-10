@@ -1,13 +1,12 @@
 -- 创建数据库
-create database `shiny` default character set utf8 collate utf8_general_ci;
+create database IF NOT EXISTS `shiny` default character set utf8 collate utf8_general_ci;
 
 use `shiny`;
 
 -- ----------------------------
 -- 1、参数配置表
 -- ----------------------------
-drop table if exists `sys_config`;
-CREATE TABLE `sys_config` (
+CREATE TABLE IF NOT EXISTS `sys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
   `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
   `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
@@ -24,8 +23,7 @@ CREATE TABLE `sys_config` (
 -- ----------------------------
 -- 2、系统用户表
 -- ----------------------------
-drop table if exists `sys_user`;
-CREATE TABLE `sys_user` (
+CREATE TABLE IF NOT EXISTS `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门ID',
   `login_name` varchar(30) NOT NULL COMMENT '登录账号',
@@ -51,8 +49,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- 3、角色信息表
 -- ----------------------------
-drop table if exists `sys_role`;
-CREATE TABLE `sys_role` (
+CREATE TABLE IF NOT EXISTS `sys_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `role_name` varchar(30) NOT NULL COMMENT '角色名称',
   `role_key` varchar(100) NOT NULL COMMENT '角色权限字符串',
@@ -69,8 +66,7 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- 4、用户和角色关联表
 -- ----------------------------
-drop table if exists `sys_user_role`;
-CREATE TABLE `sys_user_role` (
+CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_id`,`role_id`)
@@ -79,8 +75,7 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- 5、采集配置
 -- ----------------------------
-drop table if exists `spider_config`;
-CREATE TABLE `spider_config` (
+CREATE TABLE IF NOT EXISTS `spider_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置主键',
   `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
   `spider_url` varchar(500) DEFAULT '' COMMENT '采集URL',
@@ -96,8 +91,7 @@ CREATE TABLE `spider_config` (
 -- ----------------------------
 -- 6、采集内容
 -- ----------------------------
-drop table if exists `spider_content`;
-CREATE TABLE `spider_content` (
+CREATE TABLE IF NOT EXISTS `spider_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '内容主键',
   `config_id` int(11) NOT NULL COMMENT '采集配置id',
   `config_name` varchar(100) NOT NULL COMMENT '采集配置名称',
@@ -118,8 +112,7 @@ CREATE TABLE `spider_content` (
 -- ----------------------------
 -- 7、采集日志记录
 -- ----------------------------
-drop table if exists `spider_log`;
-CREATE TABLE `spider_log` (
+CREATE TABLE IF NOT EXISTS `spider_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `config_id` int(11) NOT NULL COMMENT '采集配置 id',
   `spider_name` varchar(100) DEFAULT '' COMMENT '采集名称',
@@ -134,8 +127,7 @@ CREATE TABLE `spider_log` (
 -- ----------------------------
 -- 8、邮件记录
 -- ----------------------------
-drop table if exists `email_log`;
-CREATE TABLE `email_log` (
+CREATE TABLE IF NOT EXISTS `email_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '邮件主键',
   `to` text NOT NULL COMMENT '收件人邮箱地址（多个逗号分隔）',
   `subject` varchar(100) DEFAULT '' COMMENT '邮件主题',
