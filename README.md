@@ -65,7 +65,9 @@ Successfully tagged shiny-mysql:latest
 2. 运行 `mysql` 镜像
 
 ```bash
-$ docker run -d --name shiny-mysql -p 13306:3306 -v $HOME/shiny/data:/var/lib/mysql -v $HOME/shiny/logs:/logs shiny-mysql
+$ mkdir -p $HOME/docker/shiny/mysql/data
+$ mkdir -p $HOME/docker/shiny/mysql/logs
+$ docker run -d --name shiny-mysql -p 13306:3306 -v $HOME/shiny/mysql/data:/var/lib/mysql -v $HOME/shiny/mysql/logs:/logs shiny-mysql
 974de62c11fb294b2330af339f8b07299a69f956f2a0df1ee5d2e8cbab1dd485
 ```
 3. 查看镜像构建日志
