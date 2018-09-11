@@ -102,6 +102,14 @@ MySQL Community Server 5.7.22 is running.
 1. `mysql` 镜像
     - 使用上面自己构建的镜像
     - 拉取远端镜像，`docker pull registry.cn-hangzhou.aliyuncs.com/xkcoding/shiny-telegram-mysql:latest`
+2. 运行 `mysql` 镜像
+```bash
+$ mkdir -p $HOME/docker/shiny/mysql/data
+$ mkdir -p $HOME/docker/shiny/mysql/logs
+$ docker run -d --name shiny-mysql -p 13306:3306 -v $HOME/shiny/mysql/data:/var/lib/mysql -v $HOME/shiny/mysql/logs:/logs shiny-mysql
+974de62c11fb294b2330af339f8b07299a69f956f2a0df1ee5d2e8cbab1dd485
+```
+
 
 ## 项目截图
 
