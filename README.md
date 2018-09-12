@@ -106,8 +106,8 @@ MySQL Community Server 5.7.22 is running.
 ```bash
 $ mkdir -p $HOME/docker/shiny/mysql/data
 $ mkdir -p $HOME/docker/shiny/mysql/logs
-$ docker run -d --name shiny-mysql -p 13306:3306 -v $HOME/shiny/mysql/data:/var/lib/mysql -v $HOME/shiny/mysql/logs:/logs shiny-mysql
-974de62c11fb294b2330af339f8b07299a69f956f2a0df1ee5d2e8cbab1dd485
+$ docker run -d --name shiny-mysql -p 13306:3306 -v $HOME/shiny/mysql/data:/var/lib/mysql -v $HOME/shiny/mysql/logs:/logs registry.cn-hangzhou.aliyuncs.com/xkcoding/shiny-telegram-mysql:latest
+014226044c171d37a122128765b618560b992909eda6ccc71f07584a7fea6569
 ```
 
 
