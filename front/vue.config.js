@@ -9,13 +9,16 @@ module.exports = {
   baseUrl: BASE_URL,
   chainWebpack: config => {
     config.resolve.alias
-      .set("@", resolve("src"))
-      .set("_c", resolve("src/components"));
+      .set("api", resolve("src/api"))
+      .set("components", resolve("src/components"))
+      .set("config", resolve("src/config"))
+      .set("lib", resolve("src/lib"))
+      .set("views", resolve("src/views"));
   },
   // 打包时不生成.map文件
   productionSourceMap: false,
   devServer: {
-    proxy: "http://localhost:8080",
+    // proxy: "http://localhost:8080",
     port: 4000
   }
 };
