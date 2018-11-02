@@ -3,38 +3,38 @@
 		{
 			"name": "shiny.name",
 			"type": "java.lang.String",
-			"description": "应用名称"
+			"description": "应用名称."
 		},
 		{
 			"name": "shiny.version",
 			"type": "java.lang.String",
-			"description": "应用版本号"
+			"description": "应用版本号."
 		},
 		{
 			"name": "shiny.copyrightYear",
 			"type": "java.lang.String",
-			"description": "版权年份"
+			"description": "版权年份."
 		},
 		{
 			"name": "shiny.developer",
 			"type": "java.lang.String",
-			"description": "开发者"
+			"description": "开发者."
 		},
 		{
 			"name": "shiny.driver-path",
 			"type": "java.lang.String",
-			"description": "driver 路径"
+			"description": "driver 路径."
 		},
 		{
 			"name": "shiny.spider-num",
 			"type": "java.lang.Integer",
 			"defaultValue": 5,
-			"description": "并发软件采集的数量"
+			"description": "并发软件采集的数量."
 		},
 		{
 			"name": "shiny.mail-from",
 			"type": "java.lang.String",
-			"description": "邮件发送人"
+			"description": "邮件发送人."
 		}
 	]
 }
